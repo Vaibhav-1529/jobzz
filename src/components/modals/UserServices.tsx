@@ -1,0 +1,229 @@
+"use client";
+import { UserContext } from "@/app/(group)/layout";
+import { logout } from "@/HelperFun/logout";
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Popover,
+  Separator,
+  Text,
+} from "@radix-ui/themes";
+import {
+  Building2,
+  ChevronRight,
+  LogOut,
+  User,
+  UserCircleIcon,
+  UserPen,
+  UserPlus,
+  Users,
+} from "lucide-react";
+import Link from "next/link";
+import { useContext, useState } from "react";
+import AddAccountModal from "./AddAccountModal";
+import SwitchAccModal from "./SwitchAccModal";
+
+export default function UserServices({setOpen,setSignUpOpen}:{setOpen:Function,setSignUpOpen:Function}) {
+  const { user, setUser } = useContext(UserContext);
+  const [isServiceOpen, setIsServiceOpen] = useState(false);
+  const [isAddAc, setIsAddAc] = useState(false);
+  const [isSwitchAcc, setIsSwitchAcc] = useState(false);
+
+  async function handleLogOut(e: any) {
+    e.preventDefault();
+    await logout();
+    setUser(null);
+    setIsServiceOpen(false); // Close popover on logout
+  }
+
+  return (
+    <div>
+      <Popover.Root open={isServiceOpen} onOpenChange={setIsServiceOpen}>
+        <Popover.Trigger >
+          <button onClick={() => setIsServiceOpen((prev) => !prev)}>
+            <Avatar
+              size="3"
+              fallback={user?.name?.charAt(0).toUpperCase() || "U"}
+              radius="full"
+              src="https://pbs.twimg.com/profile_images/1337055608613253126/.png"
+            />          </button>
+        </Popover.Trigger>
+
+        <Popover.Content
+          maxWidth="230px"
+          style={{
+            backgroundColor: "var(--blue-2)",
+            border: "1px solid var(--blue-5)",
+            borderRadius: "8px",
+            padding: "12px",
+            boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+          }}
+        >
+          <Flex gap="4">
+            <Avatar
+              size="3"
+              fallback={user?.name?.charAt(0).toUpperCase() || "U"}
+              radius="full"
+              src="https://pbs.twimg.com/profile_images/1337055608613253126/.png"
+            />
+            <Box>
+              <Heading size="3" as="h3" color="blue">
+                {user?.name || "Unknown"}
+              </Heading>
+              <Text as="div" size="2" color="gray" mb="2">
+                {user?.email || "No email found"}
+              </Text>
+            </Box>
+          </Flex>
+
+          <Separator my="3" size="4" />
+
+          <Box>
+            
+            {user && (
+              <div>
+
+                <Link href={"/profile"}>
+                  <Flex
+                    className="hover:border-1 px-3 py-1.5 hover:border-gray-500 rounded-md"
+                    justify="between"
+                    align="center"
+                  >
+                    <Text as="div" size="2" color="blue">
+                      <Flex gap="3" align="center">
+                        <User />
+                        User Profile
+                      </Flex>
+                    </Text>
+                    <ChevronRight className="text-[#1eadf5]" />
+                  </Flex>
+                </Link>
+
+                <Link href={"/company/profile"}>
+                  <Flex
+                    className="hover:border-1 px-3 py-1.5 hover:border-gray-500 rounded-md"
+                    justify="between"
+                    align="center"
+                  >
+                    <Text as="div" size="2" color="blue">
+                      <Flex gap="3" align="center">
+                        <Building2 />
+                        Company Profile
+                      </Flex>
+                    </Text>
+                    <ChevronRight className="text-[#1eadf5]" />
+                  </Flex>
+                </Link>
+
+                <Link href={"/company/profile"}>
+                  <Flex
+                    className="hover:border-1 px-3 py-1.5 hover:border-gray-500 rounded-md"
+                    justify="between"
+                    align="center"
+                  >
+                    <Text as="div" size="2" color="blue">
+                      <Flex gap="3" align="center">
+                        <UserPen />
+                        Edit Profile
+                      </Flex>
+                    </Text>
+                    <ChevronRight className="text-[#1eadf5]" />
+                  </Flex>
+                </Link>
+              </div>
+
+            )}
+            {user && (
+              <div>
+
+                <Flex
+                onClick={()=>{setIsSwitchAcc(true)}}
+                  className="hover:border-1 px-3 py-1.5 hover:border-gray-500 rounded-md"
+                  justify="between"
+                  align="center"
+                >
+                  <Text as="div" size="2" color="blue">
+                    <Flex gap="3" align="center">
+                      <Users />
+                      Switch Profile
+                    </Flex>
+                  </Text>
+                  <ChevronRight className="text-[#1eadf5]" />
+                </Flex>
+
+                <Flex
+                onClick={()=>{setIsAddAc(true)}}
+                  className="hover:border-1 px-3 py-1.5 hover:border-gray-500 rounded-md"
+                  justify="between"
+                  align="center"
+                >
+                  <Text as="div" size="2" color="blue">
+                    <Flex gap="3" align="center">
+                      <UserPlus />
+                      Add account
+                    </Flex>
+                  </Text>
+                  <ChevronRight className="text-[#1eadf5]" />
+                </Flex>
+
+                <Flex
+                  onClick={handleLogOut}
+                  className="hover:border-1 px-3 py-1.5 hover:border-gray-500 rounded-md"
+                  justify="start"
+                  align="center"
+                >
+                  <Text as="div" size="2" color="red">
+                    <Flex gap="3" align="center">
+                      <LogOut />
+                      Log out
+                    </Flex>
+                  </Text>
+                </Flex>
+              </div>
+            )}
+            {
+              !user&&(
+                <div>
+                  <Flex
+                  onClick={()=>{setOpen(true)}}
+                  className="hover:border-1 px-3 py-1.5 hover:border-gray-500 rounded-md"
+                  justify="start"
+                  align="center"
+                >
+                  <Text as="div" size="2" color="blue">
+                    <Flex gap="3" align="center">
+                      <LogOut />
+                      Log in
+                    </Flex>
+                  </Text>
+                </Flex>
+                  <Flex
+                  onClick={()=>{setSignUpOpen(true)}}
+                  className="hover:border-1 px-3 py-1.5 hover:border-gray-500 rounded-md"
+                  justify="start"
+                  align="center"
+                >
+                  <Text as="div" size="2" color="blue">
+                    <Flex gap="3" align="center">
+                      <LogOut />
+                      Sign up
+                    </Flex>
+                  </Text>
+                </Flex>
+                </div>
+              )
+            }
+          </Box>
+        </Popover.Content>
+      </Popover.Root>
+            <AddAccountModal isAddAc={isAddAc} setIsAddAc={setIsAddAc} setSignUpOpen={setSignUpOpen} />
+            {isSwitchAcc&&
+              <SwitchAccModal isSwitchAcc={isSwitchAcc} setIsSwitchAcc={setIsSwitchAcc}/>
+            }
+
+    </div>
+  );
+}
