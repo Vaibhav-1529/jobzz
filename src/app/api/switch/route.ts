@@ -13,12 +13,13 @@ export async function GET(req: NextRequest) {
     }
 
     if (existingToken) {
-      const data = JSON.parse(existingToken); // This will be an object
+      const data = JSON.parse(existingToken); 
+      // console.log(data);
       for (const key in data) {
         if (data.hasOwnProperty(key)) {
           try {
             const decoded: any = jwt.verify(data[key], TokenKey);
-            console.log(decoded)
+            // console.log(decoded)
             const user = await prismaclient.user.findUnique({
               where: { id: decoded.id },
               omit:{

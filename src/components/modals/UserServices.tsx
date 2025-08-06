@@ -25,31 +25,48 @@ import Link from "next/link";
 import { useContext, useState } from "react";
 import AddAccountModal from "./AddAccountModal";
 import SwitchAccModal from "./SwitchAccModal";
+import { HeaderContext } from "../headers/headerWrapper";
+import { user } from "../../../generated/prisma";
 
-export default function UserServices({setOpen,setSignUpOpen}:{setOpen:Function,setSignUpOpen:Function}) {
-  const { user, setUser } = useContext(UserContext);
-  const [isServiceOpen, setIsServiceOpen] = useState(false);
-  const [isAddAc, setIsAddAc] = useState(false);
-  const [isSwitchAcc, setIsSwitchAcc] = useState(false);
+export default function UserServices() {
+  const headerCtx = useContext(HeaderContext);
+  if (!headerCtx) return null;
+  const {
+    setIsServiceOpen,
+    setOpen,
+    isServiceOpen,
+    setIsSwitchAcc,
+    setIsAddAc,
+    setSignUpOpen,
+    isSwitchAcc,
+  } = headerCtx;
+  const { user, setUser }: { user: any; setUser: (val: any) => void } =
+    useContext(UserContext);
 
   async function handleLogOut(e: any) {
     e.preventDefault();
     await logout();
     setUser(null);
-    setIsServiceOpen(false); // Close popover on logout
+    setIsServiceOpen(false);
+    setIsSwitchAcc(true);
   }
 
   return (
     <div>
       <Popover.Root open={isServiceOpen} onOpenChange={setIsServiceOpen}>
-        <Popover.Trigger >
+        <Popover.Trigger>
           <button onClick={() => setIsServiceOpen((prev) => !prev)}>
             <Avatar
               size="3"
-              fallback={user?.name?.charAt(0).toUpperCase() || "U"}
+              fallback={
+                typeof user?.name === "string"
+                  ? user.name[0].toUpperCase()
+                  : "U"
+              }
               radius="full"
               src="https://pbs.twimg.com/profile_images/1337055608613253126/.png"
-            />          </button>
+            />{" "}
+          </button>
         </Popover.Trigger>
 
         <Popover.Content
@@ -82,10 +99,8 @@ export default function UserServices({setOpen,setSignUpOpen}:{setOpen:Function,s
           <Separator my="3" size="4" />
 
           <Box>
-            
             {user && (
               <div>
-
                 <Link href={"/profile"}>
                   <Flex
                     className="hover:border-1 px-3 py-1.5 hover:border-gray-500 rounded-md"
@@ -118,7 +133,7 @@ export default function UserServices({setOpen,setSignUpOpen}:{setOpen:Function,s
                   </Flex>
                 </Link>
 
-                <Link href={"/company/profile"}>
+                <Link href={"#"}>
                   <Flex
                     className="hover:border-1 px-3 py-1.5 hover:border-gray-500 rounded-md"
                     justify="between"
@@ -134,13 +149,13 @@ export default function UserServices({setOpen,setSignUpOpen}:{setOpen:Function,s
                   </Flex>
                 </Link>
               </div>
-
             )}
             {user && (
               <div>
-
                 <Flex
-                onClick={()=>{setIsSwitchAcc(true)}}
+                  onClick={() => {
+                    setIsSwitchAcc(true);
+                  }}
                   className="hover:border-1 px-3 py-1.5 hover:border-gray-500 rounded-md"
                   justify="between"
                   align="center"
@@ -155,7 +170,9 @@ export default function UserServices({setOpen,setSignUpOpen}:{setOpen:Function,s
                 </Flex>
 
                 <Flex
-                onClick={()=>{setIsAddAc(true)}}
+                  onClick={() => {
+                    setIsAddAc(true);
+                  }}
                   className="hover:border-1 px-3 py-1.5 hover:border-gray-500 rounded-md"
                   justify="between"
                   align="center"
@@ -184,11 +201,12 @@ export default function UserServices({setOpen,setSignUpOpen}:{setOpen:Function,s
                 </Flex>
               </div>
             )}
-            {
-              !user&&(
-                <div>
-                  <Flex
-                  onClick={()=>{setOpen(true)}}
+            {!user && (
+              <div>
+                <Flex
+                  onClick={() => {
+                    setOpen(true);
+                  }}
                   className="hover:border-1 px-3 py-1.5 hover:border-gray-500 rounded-md"
                   justify="start"
                   align="center"
@@ -200,8 +218,10 @@ export default function UserServices({setOpen,setSignUpOpen}:{setOpen:Function,s
                     </Flex>
                   </Text>
                 </Flex>
-                  <Flex
-                  onClick={()=>{setSignUpOpen(true)}}
+                <Flex
+                  onClick={() => {
+                    setSignUpOpen(true);
+                  }}
                   className="hover:border-1 px-3 py-1.5 hover:border-gray-500 rounded-md"
                   justify="start"
                   align="center"
@@ -213,17 +233,13 @@ export default function UserServices({setOpen,setSignUpOpen}:{setOpen:Function,s
                     </Flex>
                   </Text>
                 </Flex>
-                </div>
-              )
-            }
+              </div>
+            )}
           </Box>
         </Popover.Content>
       </Popover.Root>
-            <AddAccountModal isAddAc={isAddAc} setIsAddAc={setIsAddAc} setSignUpOpen={setSignUpOpen} />
-            {isSwitchAcc&&
-              <SwitchAccModal isSwitchAcc={isSwitchAcc} setIsSwitchAcc={setIsSwitchAcc}/>
-            }
-
+      <AddAccountModal />
+      {isSwitchAcc && <SwitchAccModal />}
     </div>
   );
 }

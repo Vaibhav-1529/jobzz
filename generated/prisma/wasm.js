@@ -140,6 +140,19 @@ exports.Prisma.JobScalarFieldEnum = {
   companyId: 'companyId'
 };
 
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  userId: 'userId',
+  companyId: 'companyId'
+};
+
+exports.Prisma.ApplicationsScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  job_id: 'job_id'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -154,7 +167,9 @@ exports.Prisma.QueryMode = {
 exports.Prisma.ModelName = {
   user: 'user',
   company: 'company',
-  job: 'job'
+  job: 'job',
+  review: 'review',
+  Applications: 'Applications'
 };
 
 /**

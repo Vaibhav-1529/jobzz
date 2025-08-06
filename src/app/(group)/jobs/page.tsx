@@ -13,10 +13,13 @@ type Job = {
 };
 
 export default async function page() {
-  const res=await prismaclient.job.findMany();
+  const res=await prismaclient.job.findMany({
+    include:{
+      company:true
+    }
+  });
   const jobs=res;
-
-
+// console.log(jobs);
   return (
     <main>
       <div className="flex flex-wrap justify-center gap-6 mt-6">

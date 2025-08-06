@@ -1,5 +1,3 @@
-/* ProfilePage.tsx - Radix Dark Themed Profile Page Inspired by Uploaded UI */
-
 "use client";
 
 import {

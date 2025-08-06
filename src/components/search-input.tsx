@@ -17,7 +17,7 @@ export default function SearchInput() {
       async function getsuggestion() {
         const res=await fetch(`http://localhost:3000/api/search/suggestion?q=${input}`);
         const data=await res.json();
-        console.log(data)
+        // console.log(data)
         if(data.success){
           setSuggestion(data.data);
         }

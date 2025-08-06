@@ -33,7 +33,7 @@ export default function SimpleAddJobForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!company || !company.id) {
+    if (!company || !company?.id) {
       alert("Company not found. Please log in again.");
       return;
     }
@@ -41,7 +41,7 @@ export default function SimpleAddJobForm() {
     const payload = {
       ...formData,
       salary: Number(formData.salary),
-      companyId: company.id,
+      companyId: company?.id,
     };
 
     try {

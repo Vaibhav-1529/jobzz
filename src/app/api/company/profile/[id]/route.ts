@@ -1,40 +1,48 @@
+// /api/company/profile/[id]/route.ts
 import { Checkcookie } from "@/HelperFun/Checkcookie";
 import prismaclient from "@/services/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   const user = await Checkcookie();
   if (!user) {
     return NextResponse.json({
       success: false,
-      message: "Unauthorized access",
+      message: "Not a valid user",
     });
   }
 
   try {
     const company = await prismaclient.company.findUnique({
       where: {
-        ownerId: user.id,
+        id: params.id,
       },
       include: {
         jobs: true,
+        review: {
+          include: {
+            user: true,
+          },
+        },
       },
     });
 
     if (!company) {
       return NextResponse.json({
         success: false,
-        message: "Company does not exist",
+        message: "Company not found",
       });
     }
 
     return NextResponse.json({
       success: true,
-      message: "Jobs fetched successfully",
       data: company,
     });
-  } catch (err) {
-    console.error("Error fetching company jobs:", err);
+  } catch (error) {
+    console.error("Fetch company error:", error);
     return NextResponse.json({
       success: false,
       message: "Something went wrong",

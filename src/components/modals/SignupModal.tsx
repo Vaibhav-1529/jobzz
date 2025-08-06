@@ -26,7 +26,7 @@ export default function SignupModal({
   const [role, setRole] = useState("user");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const {setUser}=useContext(UserContext)
+  const {setUser} = useContext(UserContext)
   async function handleSubmit(e: any) {
     e.preventDefault();
     setLoading(true);

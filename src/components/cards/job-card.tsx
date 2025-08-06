@@ -9,105 +9,18 @@ import {
   Badge,
   ThickChevronRightIcon,
 } from "@radix-ui/themes";
+import Link from "next/link";
+import JobApplyBtn from "../JobApplyBtn";
+import { job } from "../../../generated/prisma";
 
-type job = {
-  employer_logo: string | null;
-  employer_name: string;
-  job_title: string;
-  job_employment_type?: string;
-  job_location?: string;
-  job_state?: string;
-  job_posted_at?: string;
-  job_apply_link?: string;
-  job_description?: string;
-};
 
 export default function Jobcard({
-  job,
+  job:job,
   fromSearch = false,
 }: {
   job;
   fromSearch: boolean;
 }) {
-  // return (
-  //   <Box width="100%" style={{ maxWidth: "300px", minHeight: "340px" }}>
-  //     <Card variant="classic" style={{ padding: "1rem", height: "100%" }}>
-  //       {/* Top: Company Info */}
-  //       <Flex gap="3" align="center" mb="3">
-  //         <Avatar
-  //           size="3"
-  //           src={job.employer_logo || ""}
-  //           radius="full"
-  //           fallback="JD"
-  //         />
-  //         <Box>
-  //           <Text as="div" size="2" weight="bold">
-  //             {job.employer_name}
-  //           </Text>
-  //           <Text as="div" size="2" color="gray">
-  //             {job.job_title}
-  //           </Text>
-  //         </Box>
-  //       </Flex>
-
-  //       <Separator size="4" my="2" />
-
-  //       {/* Middle: Job Info */}
-  //       <Box mb="3">
-  //         {job.job_employment_type && (
-  //           <Text as="p" size="2" color="gray">
-  //             <strong>Type:</strong> {job.job_employment_type}
-  //           </Text>
-  //         )}
-  //         {(job.job_city || job.job_state) && (
-  //           <Text as="p" size="2" color="gray">
-  //             <strong>Location:</strong> {job.job_city}, {job.job_state}
-  //           </Text>
-  //         )}
-  //         {job.job_posted_at && (
-  //           <Text as="p" size="2" color="gray">
-  //             <strong>Posted:</strong> {job.job_posted_at}
-  //           </Text>
-  //         )}
-  //       </Box>
-
-  //       {/* Job Description Preview */}
-  //       {job.job_description && (
-  //         <Text
-  //           as="p"
-  //           size="2"
-  //           color="gray"
-  //           style={{
-  //             display: "-webkit-box",
-  //             WebkitLineClamp: 4,
-  //             WebkitBoxOrient: "vertical",
-  //             overflow: "hidden",
-  //             textOverflow: "ellipsis",
-  //             marginBottom: "1rem",
-  //             lineHeight: "1.3rem",
-  //             maxHeight: "5.2rem",
-  //           }}
-  //         >
-  //           {job.job_description}
-  //         </Text>
-  //       )}
-
-  //       {/* Apply Button */}
-  //       <Flex justify="end" mt="auto">
-  //         <Button asChild size="2" color="blue" variant="solid">
-  //           <a
-  //             href={job.job_apply_link || "#"}
-  //             target="_blank"
-  //             rel="noopener noreferrer"
-  //           >
-  //             View Job
-  //           </a>
-  //         </Button>
-  //       </Flex>
-  //     </Card>
-  //   </Box>
-  // );
-
   return (
     <Card
       style={{
@@ -132,21 +45,23 @@ export default function Jobcard({
       </Badge>
       <Flex align={"center"} gap={"6px"} justify={"between"}>
         <Box maxWidth="240px">
+          <Link href={`/company/profile/${job.company.id}`}>
           <Card>
             <Flex gap="3" align="center">
               <Avatar
                 size="2"
                 src={job.employer_logo || ""}
                 radius="full"
-                fallback="T"
-              />
+              fallback={job?.company?.name?.charAt(0).toUpperCase() || "C"}
+                />
               <Box >
                 <Text as="div" className="line-clamp-1 " size="2" weight="bold">
-                  {job.title}
+                  {job.company.name}
                 </Text>
               </Box>
             </Flex>
           </Card>
+                </Link>
         </Box>
         <Button
           style={{
@@ -155,9 +70,12 @@ export default function Jobcard({
             alignItems: "center",
           }}
         >
+          <Link href={`/jobs/${job.id}`}>
           <Text>View Job</Text>
+          </Link>
           <ThickChevronRightIcon />
         </Button>
+        <JobApplyBtn job={job}/>
       </Flex>
     </Card>
   );

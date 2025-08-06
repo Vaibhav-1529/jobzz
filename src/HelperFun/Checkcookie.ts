@@ -23,7 +23,7 @@ export async function Checkcookie() {
     return null;
   }
   if(currentuser){
-    console.log("first",currentuser)
+    // console.log("first",currentuser)
     const user = await prismaclient.user.findUnique({
       where: {
         id: currentuser.id,

@@ -1,12 +1,18 @@
 import { Card, Flex, Heading, Text, Box, Button, Badge } from "@radix-ui/themes";
 import { BriefcaseIcon, MapPinIcon, DollarSignIcon } from "lucide-react";
+import CompJobCardDropD from "../dropdowns/CompJobCardDropD";
 
 export default function CompanyJobCard({ job }:{job:any}) {
+  // console.log(job)
   return (
     <Card variant="classic" size="3" className="w-full">
       <Flex direction="column" gap="3">
         {/* Job Title */}
+        <Flex direction={'row'} justify={"between"} width={"full"}>
+
         <Heading size="4">{job.title}</Heading>
+        <CompJobCardDropD job={job} />
+        </Flex>
 
         {/* Meta Info */}
         <Flex gap="4" wrap="wrap">
@@ -18,7 +24,6 @@ export default function CompanyJobCard({ job }:{job:any}) {
           <Flex align="center" gap="2">
             <Text size="2">₹{" "+job.salary.toLocaleString()}</Text>
           </Flex>
-
           <Flex align="center" gap="2">
             <BriefcaseIcon size={16} />
             <Text size="2">{job.employment_type}</Text>

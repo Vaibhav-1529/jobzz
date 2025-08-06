@@ -59,7 +59,12 @@ export async function POST(req: NextRequest) {
 
     const response = NextResponse.json({
       success: true,
-      user,
+      user:{
+        id:user.id,
+        name:user.name,
+        email:user.email,
+        role:user.role
+      },
     });
 
     response.cookies.set("Active_User", newToken);

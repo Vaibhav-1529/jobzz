@@ -1,19 +1,15 @@
+//@ts-nocheck
 "use client";
-
 import { useContext, useState } from "react";
 import { Button, Dialog, TextField, Flex, Text } from "@radix-ui/themes";
 import { UserContext } from "@/app/(group)/layout";
+import { HeaderContext } from "../headers/headerWrapper";
 
-export default function AddAccountModal({
-  isAddAc,
-  setIsAddAc,
-  setSignUpOpen,
-}: {
-  isAddAc: boolean;
-  setIsAddAc: Function;
-  setSignUpOpen: Function;
-})
+export default function AddAccountModal()
  {
+    const headerCtx = useContext(HeaderContext);
+  if (!headerCtx) return null;
+  const { setIsAddAc, isAddAc,setSignUpOpen,setUsersData } = headerCtx;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -33,7 +29,9 @@ export default function AddAccountModal({
 
       const data = await res.json();
       if (data.success) {
+        
         setUser(data.user)
+setUsersData((prev) => [...(prev || []), data.user]);
         setTimeout(() => {
           setIsAddAc(false); // Close after short delay
         }, 800);
