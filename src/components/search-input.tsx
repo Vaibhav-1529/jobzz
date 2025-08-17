@@ -15,21 +15,24 @@ export default function SearchInput() {
     }
   }
 
-  if(input.trim())
-  useEffect(() => {
-    async function getsuggestion() {
-      const res = await fetch(
-        `/api/search/suggestion?q=${input}`
-      );
-      const data = await res.json();
-      if (data.success) {
-        setSuggestion(data.data);
-      } else {
-        setSuggestion([]);
-      }
+useEffect(() => {
+  async function getsuggestion() {
+    const res = await fetch(`/api/search/suggestion?q=${input}`);
+    const data = await res.json();
+    if (data.success) {
+      setSuggestion(data.data);
+    } else {
+      setSuggestion([]);
     }
-    if (input.trim()) getsuggestion();
-  }, [input]);
+  }
+
+  if (input.trim()) {
+    getsuggestion();
+  } else {
+    setSuggestion([]);
+  }
+}, [input]);
+
 
   return (
     <Box className="relative w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto">
