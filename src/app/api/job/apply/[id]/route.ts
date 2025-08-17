@@ -16,12 +16,12 @@ export async function GET(res: NextRequest, { params }:{
   const appToSave = {
     user_id: user?.id,
     job_id: id,
+    resumeId: "someResumeId",
   };
   const check= await prismaclient.applications.findFirst({
       where: {
         user_id:user?.id,
         job_id:id,
-         resumeId: "someResumeId",
       },
     });
     if(check){
