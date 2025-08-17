@@ -9,9 +9,16 @@ import { useRouter } from "next/navigation";
 import Loading from "@/components/lodingstate/Loading";
 import Footer from "@/components/Footer";
 
+type UserContextType = {
+  user: User;
+  setUser: (value: User) => void;
+  company: Company;
+  setCompany: (value: Company) => void;
+  isguest: boolean;
+  setIsguest: (value: boolean) => void;
+};
 
-
-export const UserContext = createContext({
+export const UserContext = createContext<UserContextType>({
   user: user,
   setUser: (value: user|null) => {},
   company: company,

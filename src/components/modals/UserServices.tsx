@@ -54,7 +54,7 @@ export default function UserServices() {
     <div>
       <Popover.Root open={isServiceOpen} onOpenChange={setIsServiceOpen}>
         <Popover.Trigger>
-          <button onClick={() => setIsServiceOpen((prev) => !prev)}>
+          <button onClick={() => setIsServiceOpen(!isServiceOpen)}>
             <Avatar
               size="3"
               fallback={

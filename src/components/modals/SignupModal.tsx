@@ -17,8 +17,8 @@ export default function SignupModal({
   setSignUpOpen,
 }: {
   signUpOpen: boolean;
-  setOpen: Function;
-  setSignUpOpen: Function;
+  setOpen: (val: boolean) => void;
+  setSignUpOpen: (val: boolean) => void;
 }) {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");

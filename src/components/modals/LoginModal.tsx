@@ -11,8 +11,8 @@ export default function LoginModal({
   setSignUpOpen,
 }: {
   open: boolean;
-  setOpen: Function;
-  setSignUpOpen: Function;
+  setOpen: (val: boolean) => void;
+  setSignUpOpen: (val: boolean) => void;
 })
  {
   const [email, setEmail] = useState("");
