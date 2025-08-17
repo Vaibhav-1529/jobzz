@@ -3,18 +3,20 @@
 import JobCard from "@/components/cards/job-card";
 import CardLoading from "@/components/lodingstate/CardLoading";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../layout";
+import Loading from "@/components/lodingstate/Loading";
 
 export default function SearchPage() {
   const searchparams = useSearchParams();
+  const {user}=useContext(UserContext)
   const q = searchparams.get("q") || "";
   const et = searchparams.get("et") || "";
   const jt=searchparams.get("jt")||"";
   const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const [isLoading, setIsLoading] = useState(true);
   const [jobs, setJobs] = useState([]);
-  // console.log(et)
-  // console.log(jt)
+  if(!user) return <Loading/>;
   useEffect(() => {
     async function fetchJobs() {
       try {

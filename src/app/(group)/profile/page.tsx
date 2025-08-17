@@ -26,9 +26,12 @@ import {
 import { useContext } from "react";
 import { UserContext } from "../layout";
 import CompanyDetailTab from "@/components/CompanyDetailTab";
+import Loading from "@/components/lodingstate/Loading";
 
 export default function ProfilePage() {
   const { user, company } = useContext(UserContext);
+  if(!user)
+    return <Loading/>
   return (
     <main className="max-w-6xl mx-auto mt-10 px-4 text-foreground">
       <Flex gap="8" className="flex-col md:flex-row">
