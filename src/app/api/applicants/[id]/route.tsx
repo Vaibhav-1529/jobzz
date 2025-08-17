@@ -7,14 +7,19 @@ export async function GET(req: NextRequest, { params }: {
   const { id } =await params;
 
   try {
-    const res = await prismaClient.applications.findMany({
-      where: {
-        job_id: id,
-      },
+const res = await prismaClient.applications.findMany({
+  where: { job_id: id },
+  select: {
+    user: {
       select: {
-        user: true,
+        id: true,
+        name: true,
+        email: true,
       },
-    });
+    },
+  },
+});
+
     const usersOnly = res.map(app => app.user); 
 
     return NextResponse.json({
