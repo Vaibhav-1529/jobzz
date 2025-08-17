@@ -1,36 +1,35 @@
 import prismaClient from "@/services/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, { params }: {
-  params:any
-}) {
-  const { id } =await params;
+export async function GET(req: NextRequest, { params }: { params: any }) {
+  const { id } = params; // no need for `await` here
 
   try {
-const res = await prismaClient.applications.findMany({
-  where: { job_id: id },
-  select: {
-    user: {
+    const res = await prismaClient.applications.findMany({
+      where: { job_id: id },
       select: {
-        id: true,
-        name: true,
-        email: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+          },
+        },
       },
-    },
-  },
-});
+    });
 
-    const usersOnly = res.map(app => app.user); 
+    const usersOnly = res.map(app => app.user);
 
     return NextResponse.json({
       success: true,
       data: usersOnly,
     });
   } catch (error: any) {
-    console.log(error?.message);
-    return NextResponse.json({
-      success: false,
-      message: "Something went wrong",
-    }, { status: 500 });
+    console.error(error);
+    return NextResponse.json(
+      { success: false, message: "Something went wrong" },
+      { status: 500 }
+    );
   }
 }
