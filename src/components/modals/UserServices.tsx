@@ -26,7 +26,6 @@ import { useContext, useState } from "react";
 import AddAccountModal from "./AddAccountModal";
 import SwitchAccModal from "./SwitchAccModal";
 import { HeaderContext } from "../headers/headerWrapper";
-import { user } from "../../../generated/prisma";
 
 export default function UserServices() {
   const headerCtx = useContext(HeaderContext);

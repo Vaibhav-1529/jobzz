@@ -101,7 +101,6 @@ export default function SimpleAddJobForm() {
           </Form.Field>
         ))}
 
-        {/* Employment Type */}
         <Form.Field name="employment_type" className="grid gap-1">
           <Form.Label className="font-medium">Employment Type</Form.Label>
           <select
@@ -122,7 +121,6 @@ export default function SimpleAddJobForm() {
           </select>
         </Form.Field>
 
-        {/* Job Type */}
         <Form.Field name="job_type" className="grid gap-1">
           <Form.Label className="font-medium">Job Type</Form.Label>
           <select
@@ -143,7 +141,6 @@ export default function SimpleAddJobForm() {
           </select>
         </Form.Field>
 
-        {/* Apply Through */}
         <Form.Field name="apply_through" className="grid gap-1">
           <Form.Label className="font-medium">Apply Through</Form.Label>
           <select
@@ -164,7 +161,6 @@ export default function SimpleAddJobForm() {
           </select>
         </Form.Field>
 
-        {/* Submit Button */}
         <Form.Submit asChild>
           <button
             type="submit"

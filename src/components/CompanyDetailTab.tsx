@@ -4,25 +4,38 @@ import { Box, Flex, Heading, Separator, Text } from '@radix-ui/themes';
 import { BookmarkIcon } from 'lucide-react';
 import { useContext, useEffect, useState } from 'react';
 import CompanyJobCard from './cards/CompanyJobCard';
+import Loading from './lodingstate/Loading';
+import SectionLoader from './lodingstate/SectionLoader';
 
 export default function CompanyDetailTab() {
     const [companyJobs, setCompanyJobs] = useState([]);
+    const [isLoading, setisLoading] = useState(false);
     const { company } = useContext(UserContext);
 
     useEffect(() => {
         async function fetchjobs() {
-            const res = await fetch('/api/company/jobs');
-            const data = await res.json();
-            const jobs = data.data?.jobs || [];
-            if (jobs) {
-                setCompanyJobs(jobs);
+            try{
+                setisLoading(true)
+                const res = await fetch('/api/company/jobs');
+                const data = await res.json();
+                const jobs = data.data?.jobs || [];
+                if (jobs) {
+                    setCompanyJobs(jobs);
+                }
             }
-        }
-        if (company) {
-            fetchjobs();
-        }
-    }, [company]);
+            catch(err){
+                console.log(err);
+            }
+            finally{
+                setisLoading(false)
+            }
 
+            }
+            if (company) {
+                fetchjobs();
+            }
+    }, [company]);
+if (isLoading) return <SectionLoader/>;
     return (
         <div>
             <Flex justify="between" align="start">

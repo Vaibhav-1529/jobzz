@@ -14,7 +14,7 @@ export default function CardLoading({ fromSearch = false }: { fromSearch?: boole
     <Card
       style={{
         maxWidth: fromSearch ? "100%" : "35%",
-        minWidth: 350,
+        minWidth: "100%",
         maxHeight:"260px",
         display: "flex",
         flexDirection: "column",
@@ -22,7 +22,6 @@ export default function CardLoading({ fromSearch = false }: { fromSearch?: boole
         padding: "1rem",
       }}
     >
-      {/* Title and category */}
       <Flex align="start" justify="between">
         <Box style={{ flexGrow: 1 }}>
           <Skeleton height="24px" width="70%" />
@@ -30,7 +29,6 @@ export default function CardLoading({ fromSearch = false }: { fromSearch?: boole
         <Skeleton height="24px" width="60px" style={{borderRadius:"full"}} />
       </Flex>
 
-      {/* Description */}
       <Box className="space-y-2">
         <Skeleton height="12px" width="100%" />
         <Skeleton height="12px" width="95%" />

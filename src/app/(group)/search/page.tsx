@@ -8,17 +8,18 @@ import { useEffect, useState } from "react";
 export default function SearchPage() {
   const searchparams = useSearchParams();
   const q = searchparams.get("q") || "";
-  const ct = searchparams.get("et") || "";
-
+  const et = searchparams.get("et") || "";
+  const jt=searchparams.get("jt")||"";
   const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const [isLoading, setIsLoading] = useState(true);
   const [jobs, setJobs] = useState([]);
-
+  // console.log(et)
+  // console.log(jt)
   useEffect(() => {
     async function fetchJobs() {
       try {
         setIsLoading(true);
-        const res = await fetch(`/api/search?q=${q}&et=${ct}`);
+        const res = await fetch(`/api/search?q=${q}&et=${et}&jt=${jt}`);
         const data = await res.json();
         if (data.success) {
           setJobs(data.data);
@@ -30,11 +31,11 @@ export default function SearchPage() {
       }
     }
     fetchJobs();
-  }, [q, ct]);
+  }, [q, et,jt]);
 
   return (
-    <main className="max-w-7xl mx-auto h-screen">
-  <div className="h-full overflow-y-auto py-10 px-4 scrollbar-hidden ">
+    <main className="max-w-7xl m-auto h-screen">
+  <div className="h-full overflow-y-auto py-5 px-4 scrollbar-hidden pb-20">
     <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
       {isLoading
         ? arr.map((item) => <CardLoading key={item} fromSearch />)

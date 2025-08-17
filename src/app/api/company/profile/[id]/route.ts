@@ -14,11 +14,11 @@ export async function GET(
       message: "Not a valid user",
     });
   }
-
+  const id=await params.id;
   try {
     const company = await prismaclient.company.findUnique({
       where: {
-        id: params.id,
+        id: id,
       },
       include: {
         jobs: true,

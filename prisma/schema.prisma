@@ -22,6 +22,7 @@ model user {
   role         String
   review       review[]
   applied_jobs Applications[]
+  Resume       Resume?
 }
 
 model company {
@@ -34,7 +35,7 @@ model company {
 }
 
 model job {
-  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
   title           String
   description     String
   location        String
@@ -42,22 +43,40 @@ model job {
   employment_type String
   job_type        String
   apply_through   String
-  companyId       String  @db.ObjectId
-  company         company @relation(fields: [companyId], references: [id])
+  companyId       String         @db.ObjectId
+  company         company        @relation(fields: [companyId], references: [id])
+  applications    Applications[]
 }
 
 model review {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
   content   String
-  userId    String  @db.ObjectId 
+  userId    String  @db.ObjectId
   user      user    @relation(fields: [userId], references: [id])
   companyId String  @db.ObjectId
   company   company @relation(fields: [companyId], references: [id])
 }
 
 model Applications {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  user_id String @db.ObjectId
-  user    user   @relation(fields: [user_id], references: [id])
-  job_id  String
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  user_id  String @db.ObjectId
+  user     user   @relation(fields: [user_id], references: [id])
+  job_id   String @db.ObjectId
+  jobs     job    @relation(fields: [job_id], references: [id])
+  Resume   Resume @relation(fields: [resumeId], references: [id])
+  resumeId String @db.ObjectId
+}
+
+model Resume {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  summary       String?
+  user          user           @relation(fields: [userId], references: [id])
+  userId        String         @unique @db.ObjectId
+  applicationId String         @db.ObjectId
+  applications  Applications[]
+  educations    String[]
+  experiences   String[]
+  skills        String[]
+  projects      String[]
 }

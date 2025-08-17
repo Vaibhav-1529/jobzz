@@ -3,16 +3,19 @@
 
 import Header from "@/components/headers/header";
 import { createContext, use, useContext, useEffect, useState } from "react";
-import { user } from "../../../generated/prisma";
+import { company, user } from "../../../generated/prisma";
 import HeaderWrapper from "@/components/headers/headerWrapper";
+import { useRouter } from "next/navigation";
+import Loading from "@/components/lodingstate/Loading";
+import Footer from "@/components/Footer";
 
 
 
 export const UserContext = createContext({
   user: user,
   setUser: (value: user|null) => {},
-  company: null,
-  setCompany: (value: null) => {},
+  company: company,
+  setCompany: (value: company|null) => {},
   isguest: false,
   setIsguest: (value: boolean) => {},
 });
@@ -25,7 +28,7 @@ export default function UserProviderLayout({
   const [user, setUser] = useState(null);
   const [isguest, setIsguest] = useState(false);
   const [company, setCompany] = useState(null);
-
+const router=useRouter();
   useEffect(() => {
     async function getUser() {
       try {
@@ -34,9 +37,7 @@ export default function UserProviderLayout({
         });
         const data = await res.json();
         if (data.success) {
-          // console.log(data);
           setUser(data.user);
-          // console.log(data.user)
           setCompany(data.company);
         }
       } catch (error) {
@@ -44,7 +45,6 @@ export default function UserProviderLayout({
         setUser(null);
       }
     }
-
     getUser();
   }, []);
 useEffect(() => {
@@ -65,13 +65,16 @@ useEffect(() => {
 
   checkGuest();
 }, []);
-
   return (
     <UserContext.Provider
       value={{ user, setUser, company, setCompany, isguest, setIsguest }}
     >
       <HeaderWrapper />
-      {children}
+      {
+        user&&company?
+        children:
+        <Loading/>
+      }
     </UserContext.Provider>
   );
 }

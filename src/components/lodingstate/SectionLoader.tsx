@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 
-export default function Loading() {
+export default function SectionLoader() {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
@@ -16,7 +16,7 @@ export default function Loading() {
         animate={{ rotate: 360 }}
         transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
       >
-        <Loader2 className="w-16 h-16 text-gray-500" />
+        <Loader2 className="w-8 h-8 text-gray-500" />
       </motion.div>
     </motion.div>
   );

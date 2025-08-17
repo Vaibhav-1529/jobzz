@@ -24,8 +24,8 @@ export default function Jobcard({
   return (
     <Card
       style={{
-        maxWidth: fromSearch ? "30%" : "25%",
-        minWidth: 350,
+        // maxWidth: fromSearch ? "35%" : "30%",
+        minWidth: "100%",
         height:"100%",
         display: "flex",
         flexDirection: "column",
@@ -75,7 +75,6 @@ export default function Jobcard({
           </Link>
           <ThickChevronRightIcon />
         </Button>
-        <JobApplyBtn job={job}/>
       </Flex>
     </Card>
   );

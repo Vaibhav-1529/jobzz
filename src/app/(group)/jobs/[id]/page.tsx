@@ -12,8 +12,12 @@ import {
   Avatar,
 } from "@radix-ui/themes";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { user } from "../../../../../generated/prisma";
+import { Check, CheckCheck } from "lucide-react";
+import WithdrawlBtn from "@/components/WithdrawalBtn";
+import { UserContext } from "../../layout";
+import Loading from "@/components/lodingstate/Loading";
 type Company = {
   id: string;
   name: string;
@@ -30,13 +34,14 @@ type Job = {
   apply_through: string;
   company: Company;
 };
-
 export default function page() {
   const [job, setJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [isAppModal, setIsAppModal] = useState<boolean>(false);
   const [applicants, setApplicants] = useState<user[]>([]);
+  const [isApplied, setIsApplied] = useState<boolean>(false);
   const { id } = useParams();
+  const { user } = useContext(UserContext);
   useEffect(() => {
     async function fetchJob() {
       setLoading(true);
@@ -59,8 +64,13 @@ export default function page() {
       try {
         const res = await fetch(`/api/applicants/${job?.id}`);
         const data = await res.json();
-        // console.log("data", data);
         setApplicants(data.data);
+        if (
+          Array.isArray(data.data) &&
+          data.data.find((item: user) => item.id == user?.id)
+        ) {
+          setIsApplied(true);
+        }
       } catch (err) {
         console.error("Failed to load job:", err);
       } finally {
@@ -68,9 +78,9 @@ export default function page() {
       }
     }
     if (job) fetchaplicants();
-  }, [job]);
+  }, [job, isApplied]);
   if (loading) {
-    return <Text>Loading...</Text>;
+    return <Loading/>;
   }
 
   if (!job) {
@@ -79,7 +89,6 @@ export default function page() {
 
   return (
     <Box className="max-w-4xl mx-auto p-6 space-y-6">
-      {/* Header */}
       <Flex align="center" justify="between" wrap="wrap" className="gap-4">
         <Box>
           <Heading size="6" className="mb-1">
@@ -101,13 +110,24 @@ export default function page() {
           >
             Total Applicants
           </Button>
-          <JobApplyBtn job={job} />
+          {!isApplied ? (
+            <JobApplyBtn
+              job={job}
+              isApplied={isApplied}
+              setIsApplied={setIsApplied}
+            />
+          ) : (
+            <WithdrawlBtn
+              job={job}
+              isApplied={isApplied}
+              setIsApplied={setIsApplied}
+            />
+          )}
         </Flex>
       </Flex>
 
-      <Separator />
+      <Separator size={"4"} />
 
-      {/* Company Card */}
       <Card size="2" className="bg-gray-100 dark:bg-gray-900">
         <Flex align="center" gap="4">
           <Avatar
@@ -124,7 +144,6 @@ export default function page() {
         </Flex>
       </Card>
 
-      {/* Description */}
       <Box>
         <Heading size="4" mb="2">
           Job Description
@@ -134,7 +153,6 @@ export default function page() {
         </Text>
       </Box>
 
-      {/* Details */}
       <Box>
         <Heading size="4" mb="2">
           Details

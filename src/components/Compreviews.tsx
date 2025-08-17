@@ -3,12 +3,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { review, user } from '../../generated/prisma';
 import { UserContext } from '@/app/(group)/layout';
 
-// Type for Review with User info
 type ReviewWithUser = review & {
   user: user;
 };
 
-export default function Compreviews({ companyId }: { companyId: string }) {
+export default function Compreviews({ companyId }: { companyId: any }) {
   const [content, setContent] = useState<string>("");
   const { user } = useContext(UserContext);
   const [companyReview, setCompanyReview] = useState<ReviewWithUser[]>([]);

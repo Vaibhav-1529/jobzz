@@ -2,33 +2,32 @@ import { Card, Flex, Heading, Text, Box, Button, Badge } from "@radix-ui/themes"
 import { BriefcaseIcon, MapPinIcon, DollarSignIcon } from "lucide-react";
 import CompJobCardDropD from "../dropdowns/CompJobCardDropD";
 
-export default function CompanyJobCard({ job }:{job:any}) {
-  // console.log(job)
+export default function UserEndComJob({ job }:{job:any}) {
+  console.log("job",job)
   return (
     <Card variant="classic" size="3" className="w-full">
       <Flex direction="column" gap="3">
         <Flex direction={'row'} justify={"between"} width={"full"}>
 
-        <Heading size="4">{job.title}</Heading>
-        <CompJobCardDropD job={job} />
+        <Heading size="4">{job?.title}</Heading>
         </Flex>
 
         <Flex gap="4" wrap="wrap">
           <Flex align="center" gap="2">
             <MapPinIcon size={16} />
-            <Text size="2">{job.location}</Text>
+            <Text size="2">{job?.location}</Text>
           </Flex>
 
           <Flex align="center" gap="2">
-            <Text size="2">₹{" "+job.salary.toLocaleString()}</Text>
+            <Text size="2">₹{" "+job.salary?.toLocaleString()}</Text>
           </Flex>
           <Flex align="center" gap="2">
             <BriefcaseIcon size={16} />
-            <Text size="2">{job.employment_type}</Text>
+            <Text size="2">{job?.employment_type}</Text>
           </Flex>
 
           <Flex align="center" gap="2">
-            	<Badge color="blue">{job.job_type}</Badge>
+            	<Badge color="blue">{job?.job_type}</Badge>
 
           </Flex>
         </Flex>
@@ -43,7 +42,7 @@ export default function CompanyJobCard({ job }:{job:any}) {
 
         <Box mt="3">
           <Button variant="surface" asChild>
-            <a href={job.apply_through} target="_blank" rel="noopener noreferrer">
+            <a href={`/jobs/${job.id}`} target="_blank" rel="noopener noreferrer">
               View Application Page
             </a>
           </Button>

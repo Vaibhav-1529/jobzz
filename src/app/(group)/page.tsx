@@ -12,7 +12,7 @@ const featuredJobs = [
     company: "InnovateX Solutions",
     type: "Remote",
     location: "Bangalore",
-    logo: "/logos/innovatex.png",
+    logo: "",
   },
   {
     id: "2",
@@ -20,7 +20,7 @@ const featuredJobs = [
     company: "PixelForge Studio",
     type: "On-site",
     location: "Delhi",
-    logo: "/logos/pixelforge.png",
+    logo: "",
   },
   {
     id: "3",
@@ -28,14 +28,13 @@ const featuredJobs = [
     company: "InsightEdge Analytics",
     type: "Hybrid",
     location: "Mumbai",
-    logo: "/logos/insightedge.png",
+    logo: "",
   },
 ];
 
 export default function Home() {
   return (
-    <main className="px-6 md:px-24 py-12 space-y-19">
-      {/* Hero */}
+    <main className="px-4 md:px-24 py-8 space-y-19">
       <section className="text-center space-y-6">
         <Heading size="9">Find Jobs That Matter</Heading>
         <Text size="5"  className="py-4 text-gray-600">
@@ -52,7 +51,7 @@ export default function Home() {
       </section>
 
       <section>
-        <Heading size="6" className="pb-6 text-center">Why Choose Jobzz?</Heading>
+        <Heading size="6" className="pb-3 text-center">Why Choose Jobzz?</Heading>
         <Flex wrap="wrap" gap="6" className="mt-5" justify="center">
           <motion.div whileHover={{ scale: 1.05 }}>
             <Card size="3" className="w-80">
@@ -84,35 +83,61 @@ export default function Home() {
         </Flex>
       </section>
 
-      {/* Featured Jobs */}
-      <section>
-        <Heading size="6" className="mb-6">Featured Jobs</Heading>
-        <Flex wrap="wrap" gap="6" className="mt-7">
-          {featuredJobs.map((job) => (
-            <motion.div key={job.id} whileHover={{ y: -5 }}>
-              <Card size="3" className="w-96 cursor-pointer">
-                <Flex gap="4">
-                  <img
-                    src={job.logo}
-                    alt={job.company}
-                    className="w-12 h-12 rounded object-cover"
-                  />
-                  <Flex direction="column">
-                    <Heading size="4">{job.title}</Heading>
-                    <Text>{job.company}</Text>
-                    <Flex gap="2" mt="2" align="center" className="text-sm text-gray-600">
-                      <MapPin size={14} /> {job.location}
-                      <Briefcase size={14} /> {job.type}
-                    </Flex>
-                  </Flex>
-                </Flex>
-              </Card>
-            </motion.div>
-          ))}
-        </Flex>
-      </section>
+<section className="w-full px-4 sm:px-6 lg:px-8 py-10">
+  <Heading
+    size="6"
+    className="mb-6 text-center mx-auto flex py-3 justify-center w-full"
+  >
+    Featured Jobs
+  </Heading>
+<Flex className="w-full justify-center max-w-7xl mx-auto ">
+  <div
+    className="
+      grid 
+      gap-6 
+      sm:grid-cols-1 
+      md:grid-cols-2 
+      lg:grid-cols-3 
+      w-full
+    "
+  >
+    {featuredJobs.map((job) => (
+      <motion.div key={job.id} whileHover={{ y: -5 }}>
+        <Card
+          size="3"
+          className="cursor-pointer transition-shadow hover:shadow-md w-full"
+        >
+          <Flex gap="4">
+            <img
+              src={job.logo}
+              alt={job.company}
+              className="w-12 h-12 rounded object-cover"
+            />
+            <Flex direction="column">
+              <Heading size="4">{job.title}</Heading>
+              <Text>{job.company}</Text>
+              <Flex
+                gap="2"
+                mt="2"
+                align="center"
+                className="text-sm text-gray-600 flex-wrap"
+              >
+                <MapPin size={14} />
+                {job.location}
+                <Briefcase size={14} />
+                {job.type}
+              </Flex>
+            </Flex>
+          </Flex>
+        </Card>
+      </motion.div>
+    ))}
+  </div>
+</Flex>
 
-      {/* Feedback */}
+</section>
+
+
       <section className="text-center space-y-6">
         <Heading size="6">What Our Users Say</Heading>
         <Text className="max-w-2xl mx-auto text-gray-600">
@@ -121,7 +146,6 @@ export default function Home() {
         <Text className="font-semibold">— Priya Mehra, Product Designer</Text>
       </section>
 
-      {/* Footer */}
       <footer className="mt-24 border-t pt-10 text-center text-sm text-gray-500">
         <Flex justify="center" gap="6" className="mb-4">
           <Link href="#">About</Link>

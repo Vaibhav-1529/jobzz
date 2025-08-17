@@ -38,6 +38,11 @@ export type review = $Result.DefaultSelection<Prisma.$reviewPayload>
  * 
  */
 export type Applications = $Result.DefaultSelection<Prisma.$ApplicationsPayload>
+/**
+ * Model Resume
+ * 
+ */
+export type Resume = $Result.DefaultSelection<Prisma.$ResumePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -180,6 +185,16 @@ export class PrismaClient<
     * ```
     */
   get applications(): Prisma.ApplicationsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.resume`: Exposes CRUD operations for the **Resume** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Resumes
+    * const resumes = await prisma.resume.findMany()
+    * ```
+    */
+  get resume(): Prisma.ResumeDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -624,7 +639,8 @@ export namespace Prisma {
     company: 'company',
     job: 'job',
     review: 'review',
-    Applications: 'Applications'
+    Applications: 'Applications',
+    Resume: 'Resume'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -643,7 +659,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "company" | "job" | "review" | "applications"
+      modelProps: "user" | "company" | "job" | "review" | "applications" | "resume"
       txIsolationLevel: never
     }
     model: {
@@ -1017,6 +1033,80 @@ export namespace Prisma {
           }
         }
       }
+      Resume: {
+        payload: Prisma.$ResumePayload<ExtArgs>
+        fields: Prisma.ResumeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ResumeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ResumeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumePayload>
+          }
+          findFirst: {
+            args: Prisma.ResumeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ResumeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumePayload>
+          }
+          findMany: {
+            args: Prisma.ResumeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumePayload>[]
+          }
+          create: {
+            args: Prisma.ResumeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumePayload>
+          }
+          createMany: {
+            args: Prisma.ResumeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ResumeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumePayload>
+          }
+          update: {
+            args: Prisma.ResumeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumePayload>
+          }
+          deleteMany: {
+            args: Prisma.ResumeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ResumeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ResumeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResumePayload>
+          }
+          aggregate: {
+            args: Prisma.ResumeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateResume>
+          }
+          groupBy: {
+            args: Prisma.ResumeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ResumeGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.ResumeFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.ResumeAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.ResumeCountArgs<ExtArgs>
+            result: $Utils.Optional<ResumeCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1101,6 +1191,7 @@ export namespace Prisma {
     job?: jobOmit
     review?: reviewOmit
     applications?: ApplicationsOmit
+    resume?: ResumeOmit
   }
 
   /* Types for Logging */
@@ -1202,11 +1293,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     review: number
     applied_jobs: number
+    Resume: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     review?: boolean | UserCountOutputTypeCountReviewArgs
     applied_jobs?: boolean | UserCountOutputTypeCountApplied_jobsArgs
+    Resume?: boolean | UserCountOutputTypeCountResumeArgs
   }
 
   // Custom InputTypes
@@ -1232,6 +1325,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountApplied_jobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ApplicationsWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountResumeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResumeWhereInput
   }
 
 
@@ -1272,6 +1372,68 @@ export namespace Prisma {
    */
   export type CompanyCountOutputTypeCountReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: reviewWhereInput
+  }
+
+
+  /**
+   * Count Type JobCountOutputType
+   */
+
+  export type JobCountOutputType = {
+    applications: number
+  }
+
+  export type JobCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    applications?: boolean | JobCountOutputTypeCountApplicationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * JobCountOutputType without action
+   */
+  export type JobCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobCountOutputType
+     */
+    select?: JobCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * JobCountOutputType without action
+   */
+  export type JobCountOutputTypeCountApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationsWhereInput
+  }
+
+
+  /**
+   * Count Type ResumeCountOutputType
+   */
+
+  export type ResumeCountOutputType = {
+    applications: number
+  }
+
+  export type ResumeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    applications?: boolean | ResumeCountOutputTypeCountApplicationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ResumeCountOutputType without action
+   */
+  export type ResumeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResumeCountOutputType
+     */
+    select?: ResumeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ResumeCountOutputType without action
+   */
+  export type ResumeCountOutputTypeCountApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationsWhereInput
   }
 
 
@@ -1445,6 +1607,7 @@ export namespace Prisma {
     role?: boolean
     review?: boolean | user$reviewArgs<ExtArgs>
     applied_jobs?: boolean | user$applied_jobsArgs<ExtArgs>
+    Resume?: boolean | user$ResumeArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1462,6 +1625,7 @@ export namespace Prisma {
   export type userInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     review?: boolean | user$reviewArgs<ExtArgs>
     applied_jobs?: boolean | user$applied_jobsArgs<ExtArgs>
+    Resume?: boolean | user$ResumeArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1470,6 +1634,7 @@ export namespace Prisma {
     objects: {
       review: Prisma.$reviewPayload<ExtArgs>[]
       applied_jobs: Prisma.$ApplicationsPayload<ExtArgs>[]
+      Resume: Prisma.$ResumePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1842,6 +2007,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     review<T extends user$reviewArgs<ExtArgs> = {}>(args?: Subset<T, user$reviewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$reviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     applied_jobs<T extends user$applied_jobsArgs<ExtArgs> = {}>(args?: Subset<T, user$applied_jobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Resume<T extends user$ResumeArgs<ExtArgs> = {}>(args?: Subset<T, user$ResumeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2291,6 +2457,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ApplicationsScalarFieldEnum | ApplicationsScalarFieldEnum[]
+  }
+
+  /**
+   * user.Resume
+   */
+  export type user$ResumeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resume
+     */
+    select?: ResumeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resume
+     */
+    omit?: ResumeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeInclude<ExtArgs> | null
+    where?: ResumeWhereInput
+    orderBy?: ResumeOrderByWithRelationInput | ResumeOrderByWithRelationInput[]
+    cursor?: ResumeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResumeScalarFieldEnum | ResumeScalarFieldEnum[]
   }
 
   /**
@@ -3565,6 +3755,8 @@ export namespace Prisma {
     apply_through?: boolean
     companyId?: boolean
     company?: boolean | companyDefaultArgs<ExtArgs>
+    applications?: boolean | job$applicationsArgs<ExtArgs>
+    _count?: boolean | JobCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["job"]>
 
 
@@ -3584,12 +3776,15 @@ export namespace Prisma {
   export type jobOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "location" | "salary" | "employment_type" | "job_type" | "apply_through" | "companyId", ExtArgs["result"]["job"]>
   export type jobInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | companyDefaultArgs<ExtArgs>
+    applications?: boolean | job$applicationsArgs<ExtArgs>
+    _count?: boolean | JobCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $jobPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "job"
     objects: {
       company: Prisma.$companyPayload<ExtArgs>
+      applications: Prisma.$ApplicationsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3965,6 +4160,7 @@ export namespace Prisma {
   export interface Prisma__jobClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     company<T extends companyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, companyDefaultArgs<ExtArgs>>): Prisma__companyClient<$Result.GetResult<Prisma.$companyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    applications<T extends job$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, job$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4370,6 +4566,30 @@ export namespace Prisma {
      * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
      */
     options?: InputJsonValue
+  }
+
+  /**
+   * job.applications
+   */
+  export type job$applicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Applications
+     */
+    select?: ApplicationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Applications
+     */
+    omit?: ApplicationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationsInclude<ExtArgs> | null
+    where?: ApplicationsWhereInput
+    orderBy?: ApplicationsOrderByWithRelationInput | ApplicationsOrderByWithRelationInput[]
+    cursor?: ApplicationsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationsScalarFieldEnum | ApplicationsScalarFieldEnum[]
   }
 
   /**
@@ -5377,18 +5597,21 @@ export namespace Prisma {
     id: string | null
     user_id: string | null
     job_id: string | null
+    resumeId: string | null
   }
 
   export type ApplicationsMaxAggregateOutputType = {
     id: string | null
     user_id: string | null
     job_id: string | null
+    resumeId: string | null
   }
 
   export type ApplicationsCountAggregateOutputType = {
     id: number
     user_id: number
     job_id: number
+    resumeId: number
     _all: number
   }
 
@@ -5397,18 +5620,21 @@ export namespace Prisma {
     id?: true
     user_id?: true
     job_id?: true
+    resumeId?: true
   }
 
   export type ApplicationsMaxAggregateInputType = {
     id?: true
     user_id?: true
     job_id?: true
+    resumeId?: true
   }
 
   export type ApplicationsCountAggregateInputType = {
     id?: true
     user_id?: true
     job_id?: true
+    resumeId?: true
     _all?: true
   }
 
@@ -5488,6 +5714,7 @@ export namespace Prisma {
     id: string
     user_id: string
     job_id: string
+    resumeId: string | null
     _count: ApplicationsCountAggregateOutputType | null
     _min: ApplicationsMinAggregateOutputType | null
     _max: ApplicationsMaxAggregateOutputType | null
@@ -5511,7 +5738,10 @@ export namespace Prisma {
     id?: boolean
     user_id?: boolean
     job_id?: boolean
+    resumeId?: boolean
     user?: boolean | userDefaultArgs<ExtArgs>
+    jobs?: boolean | jobDefaultArgs<ExtArgs>
+    Resume?: boolean | Applications$ResumeArgs<ExtArgs>
   }, ExtArgs["result"]["applications"]>
 
 
@@ -5520,22 +5750,28 @@ export namespace Prisma {
     id?: boolean
     user_id?: boolean
     job_id?: boolean
+    resumeId?: boolean
   }
 
-  export type ApplicationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "job_id", ExtArgs["result"]["applications"]>
+  export type ApplicationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "job_id" | "resumeId", ExtArgs["result"]["applications"]>
   export type ApplicationsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | userDefaultArgs<ExtArgs>
+    jobs?: boolean | jobDefaultArgs<ExtArgs>
+    Resume?: boolean | Applications$ResumeArgs<ExtArgs>
   }
 
   export type $ApplicationsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Applications"
     objects: {
       user: Prisma.$userPayload<ExtArgs>
+      jobs: Prisma.$jobPayload<ExtArgs>
+      Resume: Prisma.$ResumePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       user_id: string
       job_id: string
+      resumeId: string | null
     }, ExtArgs["result"]["applications"]>
     composites: {}
   }
@@ -5900,6 +6136,8 @@ export namespace Prisma {
   export interface Prisma__ApplicationsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends userDefaultArgs<ExtArgs> = {}>(args?: Subset<T, userDefaultArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    jobs<T extends jobDefaultArgs<ExtArgs> = {}>(args?: Subset<T, jobDefaultArgs<ExtArgs>>): Prisma__jobClient<$Result.GetResult<Prisma.$jobPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    Resume<T extends Applications$ResumeArgs<ExtArgs> = {}>(args?: Subset<T, Applications$ResumeArgs<ExtArgs>>): Prisma__ResumeClient<$Result.GetResult<Prisma.$ResumePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5932,6 +6170,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Applications", 'String'>
     readonly user_id: FieldRef<"Applications", 'String'>
     readonly job_id: FieldRef<"Applications", 'String'>
+    readonly resumeId: FieldRef<"Applications", 'String'>
   }
     
 
@@ -6302,6 +6541,25 @@ export namespace Prisma {
   }
 
   /**
+   * Applications.Resume
+   */
+  export type Applications$ResumeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resume
+     */
+    select?: ResumeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resume
+     */
+    omit?: ResumeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeInclude<ExtArgs> | null
+    where?: ResumeWhereInput
+  }
+
+  /**
    * Applications without action
    */
   export type ApplicationsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6317,6 +6575,1043 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ApplicationsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Resume
+   */
+
+  export type AggregateResume = {
+    _count: ResumeCountAggregateOutputType | null
+    _min: ResumeMinAggregateOutputType | null
+    _max: ResumeMaxAggregateOutputType | null
+  }
+
+  export type ResumeMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    summary: string | null
+    userId: string | null
+    applicationId: string | null
+  }
+
+  export type ResumeMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    summary: string | null
+    userId: string | null
+    applicationId: string | null
+  }
+
+  export type ResumeCountAggregateOutputType = {
+    id: number
+    title: number
+    summary: number
+    userId: number
+    applicationId: number
+    educations: number
+    experiences: number
+    skills: number
+    projects: number
+    _all: number
+  }
+
+
+  export type ResumeMinAggregateInputType = {
+    id?: true
+    title?: true
+    summary?: true
+    userId?: true
+    applicationId?: true
+  }
+
+  export type ResumeMaxAggregateInputType = {
+    id?: true
+    title?: true
+    summary?: true
+    userId?: true
+    applicationId?: true
+  }
+
+  export type ResumeCountAggregateInputType = {
+    id?: true
+    title?: true
+    summary?: true
+    userId?: true
+    applicationId?: true
+    educations?: true
+    experiences?: true
+    skills?: true
+    projects?: true
+    _all?: true
+  }
+
+  export type ResumeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Resume to aggregate.
+     */
+    where?: ResumeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Resumes to fetch.
+     */
+    orderBy?: ResumeOrderByWithRelationInput | ResumeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ResumeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Resumes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Resumes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Resumes
+    **/
+    _count?: true | ResumeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ResumeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ResumeMaxAggregateInputType
+  }
+
+  export type GetResumeAggregateType<T extends ResumeAggregateArgs> = {
+        [P in keyof T & keyof AggregateResume]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateResume[P]>
+      : GetScalarType<T[P], AggregateResume[P]>
+  }
+
+
+
+
+  export type ResumeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResumeWhereInput
+    orderBy?: ResumeOrderByWithAggregationInput | ResumeOrderByWithAggregationInput[]
+    by: ResumeScalarFieldEnum[] | ResumeScalarFieldEnum
+    having?: ResumeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ResumeCountAggregateInputType | true
+    _min?: ResumeMinAggregateInputType
+    _max?: ResumeMaxAggregateInputType
+  }
+
+  export type ResumeGroupByOutputType = {
+    id: string
+    title: string
+    summary: string | null
+    userId: string
+    applicationId: string
+    educations: string[]
+    experiences: string[]
+    skills: string[]
+    projects: string[]
+    _count: ResumeCountAggregateOutputType | null
+    _min: ResumeMinAggregateOutputType | null
+    _max: ResumeMaxAggregateOutputType | null
+  }
+
+  type GetResumeGroupByPayload<T extends ResumeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ResumeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ResumeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ResumeGroupByOutputType[P]>
+            : GetScalarType<T[P], ResumeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ResumeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    summary?: boolean
+    userId?: boolean
+    applicationId?: boolean
+    educations?: boolean
+    experiences?: boolean
+    skills?: boolean
+    projects?: boolean
+    user?: boolean | userDefaultArgs<ExtArgs>
+    applications?: boolean | Resume$applicationsArgs<ExtArgs>
+    _count?: boolean | ResumeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["resume"]>
+
+
+
+  export type ResumeSelectScalar = {
+    id?: boolean
+    title?: boolean
+    summary?: boolean
+    userId?: boolean
+    applicationId?: boolean
+    educations?: boolean
+    experiences?: boolean
+    skills?: boolean
+    projects?: boolean
+  }
+
+  export type ResumeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "summary" | "userId" | "applicationId" | "educations" | "experiences" | "skills" | "projects", ExtArgs["result"]["resume"]>
+  export type ResumeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | userDefaultArgs<ExtArgs>
+    applications?: boolean | Resume$applicationsArgs<ExtArgs>
+    _count?: boolean | ResumeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $ResumePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Resume"
+    objects: {
+      user: Prisma.$userPayload<ExtArgs>
+      applications: Prisma.$ApplicationsPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      summary: string | null
+      userId: string
+      applicationId: string
+      educations: string[]
+      experiences: string[]
+      skills: string[]
+      projects: string[]
+    }, ExtArgs["result"]["resume"]>
+    composites: {}
+  }
+
+  type ResumeGetPayload<S extends boolean | null | undefined | ResumeDefaultArgs> = $Result.GetResult<Prisma.$ResumePayload, S>
+
+  type ResumeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ResumeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ResumeCountAggregateInputType | true
+    }
+
+  export interface ResumeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Resume'], meta: { name: 'Resume' } }
+    /**
+     * Find zero or one Resume that matches the filter.
+     * @param {ResumeFindUniqueArgs} args - Arguments to find a Resume
+     * @example
+     * // Get one Resume
+     * const resume = await prisma.resume.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ResumeFindUniqueArgs>(args: SelectSubset<T, ResumeFindUniqueArgs<ExtArgs>>): Prisma__ResumeClient<$Result.GetResult<Prisma.$ResumePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Resume that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ResumeFindUniqueOrThrowArgs} args - Arguments to find a Resume
+     * @example
+     * // Get one Resume
+     * const resume = await prisma.resume.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ResumeFindUniqueOrThrowArgs>(args: SelectSubset<T, ResumeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ResumeClient<$Result.GetResult<Prisma.$ResumePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Resume that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResumeFindFirstArgs} args - Arguments to find a Resume
+     * @example
+     * // Get one Resume
+     * const resume = await prisma.resume.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ResumeFindFirstArgs>(args?: SelectSubset<T, ResumeFindFirstArgs<ExtArgs>>): Prisma__ResumeClient<$Result.GetResult<Prisma.$ResumePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Resume that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResumeFindFirstOrThrowArgs} args - Arguments to find a Resume
+     * @example
+     * // Get one Resume
+     * const resume = await prisma.resume.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ResumeFindFirstOrThrowArgs>(args?: SelectSubset<T, ResumeFindFirstOrThrowArgs<ExtArgs>>): Prisma__ResumeClient<$Result.GetResult<Prisma.$ResumePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Resumes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResumeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Resumes
+     * const resumes = await prisma.resume.findMany()
+     * 
+     * // Get first 10 Resumes
+     * const resumes = await prisma.resume.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const resumeWithIdOnly = await prisma.resume.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ResumeFindManyArgs>(args?: SelectSubset<T, ResumeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Resume.
+     * @param {ResumeCreateArgs} args - Arguments to create a Resume.
+     * @example
+     * // Create one Resume
+     * const Resume = await prisma.resume.create({
+     *   data: {
+     *     // ... data to create a Resume
+     *   }
+     * })
+     * 
+     */
+    create<T extends ResumeCreateArgs>(args: SelectSubset<T, ResumeCreateArgs<ExtArgs>>): Prisma__ResumeClient<$Result.GetResult<Prisma.$ResumePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Resumes.
+     * @param {ResumeCreateManyArgs} args - Arguments to create many Resumes.
+     * @example
+     * // Create many Resumes
+     * const resume = await prisma.resume.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ResumeCreateManyArgs>(args?: SelectSubset<T, ResumeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Resume.
+     * @param {ResumeDeleteArgs} args - Arguments to delete one Resume.
+     * @example
+     * // Delete one Resume
+     * const Resume = await prisma.resume.delete({
+     *   where: {
+     *     // ... filter to delete one Resume
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ResumeDeleteArgs>(args: SelectSubset<T, ResumeDeleteArgs<ExtArgs>>): Prisma__ResumeClient<$Result.GetResult<Prisma.$ResumePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Resume.
+     * @param {ResumeUpdateArgs} args - Arguments to update one Resume.
+     * @example
+     * // Update one Resume
+     * const resume = await prisma.resume.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ResumeUpdateArgs>(args: SelectSubset<T, ResumeUpdateArgs<ExtArgs>>): Prisma__ResumeClient<$Result.GetResult<Prisma.$ResumePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Resumes.
+     * @param {ResumeDeleteManyArgs} args - Arguments to filter Resumes to delete.
+     * @example
+     * // Delete a few Resumes
+     * const { count } = await prisma.resume.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ResumeDeleteManyArgs>(args?: SelectSubset<T, ResumeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Resumes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResumeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Resumes
+     * const resume = await prisma.resume.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ResumeUpdateManyArgs>(args: SelectSubset<T, ResumeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Resume.
+     * @param {ResumeUpsertArgs} args - Arguments to update or create a Resume.
+     * @example
+     * // Update or create a Resume
+     * const resume = await prisma.resume.upsert({
+     *   create: {
+     *     // ... data to create a Resume
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Resume we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ResumeUpsertArgs>(args: SelectSubset<T, ResumeUpsertArgs<ExtArgs>>): Prisma__ResumeClient<$Result.GetResult<Prisma.$ResumePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Resumes that matches the filter.
+     * @param {ResumeFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const resume = await prisma.resume.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: ResumeFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a Resume.
+     * @param {ResumeAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const resume = await prisma.resume.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: ResumeAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of Resumes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResumeCountArgs} args - Arguments to filter Resumes to count.
+     * @example
+     * // Count the number of Resumes
+     * const count = await prisma.resume.count({
+     *   where: {
+     *     // ... the filter for the Resumes we want to count
+     *   }
+     * })
+    **/
+    count<T extends ResumeCountArgs>(
+      args?: Subset<T, ResumeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ResumeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Resume.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResumeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ResumeAggregateArgs>(args: Subset<T, ResumeAggregateArgs>): Prisma.PrismaPromise<GetResumeAggregateType<T>>
+
+    /**
+     * Group by Resume.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResumeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ResumeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ResumeGroupByArgs['orderBy'] }
+        : { orderBy?: ResumeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ResumeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetResumeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Resume model
+   */
+  readonly fields: ResumeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Resume.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ResumeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends userDefaultArgs<ExtArgs> = {}>(args?: Subset<T, userDefaultArgs<ExtArgs>>): Prisma__userClient<$Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    applications<T extends Resume$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, Resume$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Resume model
+   */
+  interface ResumeFieldRefs {
+    readonly id: FieldRef<"Resume", 'String'>
+    readonly title: FieldRef<"Resume", 'String'>
+    readonly summary: FieldRef<"Resume", 'String'>
+    readonly userId: FieldRef<"Resume", 'String'>
+    readonly applicationId: FieldRef<"Resume", 'String'>
+    readonly educations: FieldRef<"Resume", 'String[]'>
+    readonly experiences: FieldRef<"Resume", 'String[]'>
+    readonly skills: FieldRef<"Resume", 'String[]'>
+    readonly projects: FieldRef<"Resume", 'String[]'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Resume findUnique
+   */
+  export type ResumeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resume
+     */
+    select?: ResumeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resume
+     */
+    omit?: ResumeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeInclude<ExtArgs> | null
+    /**
+     * Filter, which Resume to fetch.
+     */
+    where: ResumeWhereUniqueInput
+  }
+
+  /**
+   * Resume findUniqueOrThrow
+   */
+  export type ResumeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resume
+     */
+    select?: ResumeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resume
+     */
+    omit?: ResumeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeInclude<ExtArgs> | null
+    /**
+     * Filter, which Resume to fetch.
+     */
+    where: ResumeWhereUniqueInput
+  }
+
+  /**
+   * Resume findFirst
+   */
+  export type ResumeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resume
+     */
+    select?: ResumeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resume
+     */
+    omit?: ResumeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeInclude<ExtArgs> | null
+    /**
+     * Filter, which Resume to fetch.
+     */
+    where?: ResumeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Resumes to fetch.
+     */
+    orderBy?: ResumeOrderByWithRelationInput | ResumeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Resumes.
+     */
+    cursor?: ResumeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Resumes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Resumes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Resumes.
+     */
+    distinct?: ResumeScalarFieldEnum | ResumeScalarFieldEnum[]
+  }
+
+  /**
+   * Resume findFirstOrThrow
+   */
+  export type ResumeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resume
+     */
+    select?: ResumeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resume
+     */
+    omit?: ResumeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeInclude<ExtArgs> | null
+    /**
+     * Filter, which Resume to fetch.
+     */
+    where?: ResumeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Resumes to fetch.
+     */
+    orderBy?: ResumeOrderByWithRelationInput | ResumeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Resumes.
+     */
+    cursor?: ResumeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Resumes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Resumes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Resumes.
+     */
+    distinct?: ResumeScalarFieldEnum | ResumeScalarFieldEnum[]
+  }
+
+  /**
+   * Resume findMany
+   */
+  export type ResumeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resume
+     */
+    select?: ResumeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resume
+     */
+    omit?: ResumeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeInclude<ExtArgs> | null
+    /**
+     * Filter, which Resumes to fetch.
+     */
+    where?: ResumeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Resumes to fetch.
+     */
+    orderBy?: ResumeOrderByWithRelationInput | ResumeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Resumes.
+     */
+    cursor?: ResumeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Resumes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Resumes.
+     */
+    skip?: number
+    distinct?: ResumeScalarFieldEnum | ResumeScalarFieldEnum[]
+  }
+
+  /**
+   * Resume create
+   */
+  export type ResumeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resume
+     */
+    select?: ResumeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resume
+     */
+    omit?: ResumeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Resume.
+     */
+    data: XOR<ResumeCreateInput, ResumeUncheckedCreateInput>
+  }
+
+  /**
+   * Resume createMany
+   */
+  export type ResumeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Resumes.
+     */
+    data: ResumeCreateManyInput | ResumeCreateManyInput[]
+  }
+
+  /**
+   * Resume update
+   */
+  export type ResumeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resume
+     */
+    select?: ResumeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resume
+     */
+    omit?: ResumeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Resume.
+     */
+    data: XOR<ResumeUpdateInput, ResumeUncheckedUpdateInput>
+    /**
+     * Choose, which Resume to update.
+     */
+    where: ResumeWhereUniqueInput
+  }
+
+  /**
+   * Resume updateMany
+   */
+  export type ResumeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Resumes.
+     */
+    data: XOR<ResumeUpdateManyMutationInput, ResumeUncheckedUpdateManyInput>
+    /**
+     * Filter which Resumes to update
+     */
+    where?: ResumeWhereInput
+    /**
+     * Limit how many Resumes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Resume upsert
+   */
+  export type ResumeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resume
+     */
+    select?: ResumeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resume
+     */
+    omit?: ResumeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Resume to update in case it exists.
+     */
+    where: ResumeWhereUniqueInput
+    /**
+     * In case the Resume found by the `where` argument doesn't exist, create a new Resume with this data.
+     */
+    create: XOR<ResumeCreateInput, ResumeUncheckedCreateInput>
+    /**
+     * In case the Resume was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ResumeUpdateInput, ResumeUncheckedUpdateInput>
+  }
+
+  /**
+   * Resume delete
+   */
+  export type ResumeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resume
+     */
+    select?: ResumeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resume
+     */
+    omit?: ResumeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeInclude<ExtArgs> | null
+    /**
+     * Filter which Resume to delete.
+     */
+    where: ResumeWhereUniqueInput
+  }
+
+  /**
+   * Resume deleteMany
+   */
+  export type ResumeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Resumes to delete
+     */
+    where?: ResumeWhereInput
+    /**
+     * Limit how many Resumes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Resume findRaw
+   */
+  export type ResumeFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * Resume aggregateRaw
+   */
+  export type ResumeAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * Resume.applications
+   */
+  export type Resume$applicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Applications
+     */
+    select?: ApplicationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Applications
+     */
+    omit?: ApplicationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationsInclude<ExtArgs> | null
+    where?: ApplicationsWhereInput
+    orderBy?: ApplicationsOrderByWithRelationInput | ApplicationsOrderByWithRelationInput[]
+    cursor?: ApplicationsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationsScalarFieldEnum | ApplicationsScalarFieldEnum[]
+  }
+
+  /**
+   * Resume without action
+   */
+  export type ResumeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resume
+     */
+    select?: ResumeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resume
+     */
+    omit?: ResumeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumeInclude<ExtArgs> | null
   }
 
 
@@ -6373,10 +7668,26 @@ export namespace Prisma {
   export const ApplicationsScalarFieldEnum: {
     id: 'id',
     user_id: 'user_id',
-    job_id: 'job_id'
+    job_id: 'job_id',
+    resumeId: 'resumeId'
   };
 
   export type ApplicationsScalarFieldEnum = (typeof ApplicationsScalarFieldEnum)[keyof typeof ApplicationsScalarFieldEnum]
+
+
+  export const ResumeScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    summary: 'summary',
+    userId: 'userId',
+    applicationId: 'applicationId',
+    educations: 'educations',
+    experiences: 'experiences',
+    skills: 'skills',
+    projects: 'projects'
+  };
+
+  export type ResumeScalarFieldEnum = (typeof ResumeScalarFieldEnum)[keyof typeof ResumeScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -6456,6 +7767,7 @@ export namespace Prisma {
     role?: StringFilter<"user"> | string
     review?: ReviewListRelationFilter
     applied_jobs?: ApplicationsListRelationFilter
+    Resume?: ResumeListRelationFilter
   }
 
   export type userOrderByWithRelationInput = {
@@ -6466,6 +7778,7 @@ export namespace Prisma {
     role?: SortOrder
     review?: reviewOrderByRelationAggregateInput
     applied_jobs?: ApplicationsOrderByRelationAggregateInput
+    Resume?: ResumeOrderByRelationAggregateInput
   }
 
   export type userWhereUniqueInput = Prisma.AtLeast<{
@@ -6479,6 +7792,7 @@ export namespace Prisma {
     role?: StringFilter<"user"> | string
     review?: ReviewListRelationFilter
     applied_jobs?: ApplicationsListRelationFilter
+    Resume?: ResumeListRelationFilter
   }, "id" | "email">
 
   export type userOrderByWithAggregationInput = {
@@ -6570,6 +7884,7 @@ export namespace Prisma {
     apply_through?: StringFilter<"job"> | string
     companyId?: StringFilter<"job"> | string
     company?: XOR<CompanyScalarRelationFilter, companyWhereInput>
+    applications?: ApplicationsListRelationFilter
   }
 
   export type jobOrderByWithRelationInput = {
@@ -6583,6 +7898,7 @@ export namespace Prisma {
     apply_through?: SortOrder
     companyId?: SortOrder
     company?: companyOrderByWithRelationInput
+    applications?: ApplicationsOrderByRelationAggregateInput
   }
 
   export type jobWhereUniqueInput = Prisma.AtLeast<{
@@ -6599,6 +7915,7 @@ export namespace Prisma {
     apply_through?: StringFilter<"job"> | string
     companyId?: StringFilter<"job"> | string
     company?: XOR<CompanyScalarRelationFilter, companyWhereInput>
+    applications?: ApplicationsListRelationFilter
   }, "id">
 
   export type jobOrderByWithAggregationInput = {
@@ -6693,14 +8010,20 @@ export namespace Prisma {
     id?: StringFilter<"Applications"> | string
     user_id?: StringFilter<"Applications"> | string
     job_id?: StringFilter<"Applications"> | string
+    resumeId?: StringNullableFilter<"Applications"> | string | null
     user?: XOR<UserScalarRelationFilter, userWhereInput>
+    jobs?: XOR<JobScalarRelationFilter, jobWhereInput>
+    Resume?: XOR<ResumeNullableScalarRelationFilter, ResumeWhereInput> | null
   }
 
   export type ApplicationsOrderByWithRelationInput = {
     id?: SortOrder
     user_id?: SortOrder
     job_id?: SortOrder
+    resumeId?: SortOrder
     user?: userOrderByWithRelationInput
+    jobs?: jobOrderByWithRelationInput
+    Resume?: ResumeOrderByWithRelationInput
   }
 
   export type ApplicationsWhereUniqueInput = Prisma.AtLeast<{
@@ -6710,13 +8033,17 @@ export namespace Prisma {
     NOT?: ApplicationsWhereInput | ApplicationsWhereInput[]
     user_id?: StringFilter<"Applications"> | string
     job_id?: StringFilter<"Applications"> | string
+    resumeId?: StringNullableFilter<"Applications"> | string | null
     user?: XOR<UserScalarRelationFilter, userWhereInput>
+    jobs?: XOR<JobScalarRelationFilter, jobWhereInput>
+    Resume?: XOR<ResumeNullableScalarRelationFilter, ResumeWhereInput> | null
   }, "id">
 
   export type ApplicationsOrderByWithAggregationInput = {
     id?: SortOrder
     user_id?: SortOrder
     job_id?: SortOrder
+    resumeId?: SortOrder
     _count?: ApplicationsCountOrderByAggregateInput
     _max?: ApplicationsMaxOrderByAggregateInput
     _min?: ApplicationsMinOrderByAggregateInput
@@ -6729,6 +8056,85 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Applications"> | string
     user_id?: StringWithAggregatesFilter<"Applications"> | string
     job_id?: StringWithAggregatesFilter<"Applications"> | string
+    resumeId?: StringNullableWithAggregatesFilter<"Applications"> | string | null
+  }
+
+  export type ResumeWhereInput = {
+    AND?: ResumeWhereInput | ResumeWhereInput[]
+    OR?: ResumeWhereInput[]
+    NOT?: ResumeWhereInput | ResumeWhereInput[]
+    id?: StringFilter<"Resume"> | string
+    title?: StringFilter<"Resume"> | string
+    summary?: StringNullableFilter<"Resume"> | string | null
+    userId?: StringFilter<"Resume"> | string
+    applicationId?: StringFilter<"Resume"> | string
+    educations?: StringNullableListFilter<"Resume">
+    experiences?: StringNullableListFilter<"Resume">
+    skills?: StringNullableListFilter<"Resume">
+    projects?: StringNullableListFilter<"Resume">
+    user?: XOR<UserScalarRelationFilter, userWhereInput>
+    applications?: ApplicationsListRelationFilter
+  }
+
+  export type ResumeOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    summary?: SortOrder
+    userId?: SortOrder
+    applicationId?: SortOrder
+    educations?: SortOrder
+    experiences?: SortOrder
+    skills?: SortOrder
+    projects?: SortOrder
+    user?: userOrderByWithRelationInput
+    applications?: ApplicationsOrderByRelationAggregateInput
+  }
+
+  export type ResumeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ResumeWhereInput | ResumeWhereInput[]
+    OR?: ResumeWhereInput[]
+    NOT?: ResumeWhereInput | ResumeWhereInput[]
+    title?: StringFilter<"Resume"> | string
+    summary?: StringNullableFilter<"Resume"> | string | null
+    userId?: StringFilter<"Resume"> | string
+    applicationId?: StringFilter<"Resume"> | string
+    educations?: StringNullableListFilter<"Resume">
+    experiences?: StringNullableListFilter<"Resume">
+    skills?: StringNullableListFilter<"Resume">
+    projects?: StringNullableListFilter<"Resume">
+    user?: XOR<UserScalarRelationFilter, userWhereInput>
+    applications?: ApplicationsListRelationFilter
+  }, "id">
+
+  export type ResumeOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    summary?: SortOrder
+    userId?: SortOrder
+    applicationId?: SortOrder
+    educations?: SortOrder
+    experiences?: SortOrder
+    skills?: SortOrder
+    projects?: SortOrder
+    _count?: ResumeCountOrderByAggregateInput
+    _max?: ResumeMaxOrderByAggregateInput
+    _min?: ResumeMinOrderByAggregateInput
+  }
+
+  export type ResumeScalarWhereWithAggregatesInput = {
+    AND?: ResumeScalarWhereWithAggregatesInput | ResumeScalarWhereWithAggregatesInput[]
+    OR?: ResumeScalarWhereWithAggregatesInput[]
+    NOT?: ResumeScalarWhereWithAggregatesInput | ResumeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Resume"> | string
+    title?: StringWithAggregatesFilter<"Resume"> | string
+    summary?: StringNullableWithAggregatesFilter<"Resume"> | string | null
+    userId?: StringWithAggregatesFilter<"Resume"> | string
+    applicationId?: StringWithAggregatesFilter<"Resume"> | string
+    educations?: StringNullableListFilter<"Resume">
+    experiences?: StringNullableListFilter<"Resume">
+    skills?: StringNullableListFilter<"Resume">
+    projects?: StringNullableListFilter<"Resume">
   }
 
   export type userCreateInput = {
@@ -6739,6 +8145,7 @@ export namespace Prisma {
     role: string
     review?: reviewCreateNestedManyWithoutUserInput
     applied_jobs?: ApplicationsCreateNestedManyWithoutUserInput
+    Resume?: ResumeCreateNestedManyWithoutUserInput
   }
 
   export type userUncheckedCreateInput = {
@@ -6749,6 +8156,7 @@ export namespace Prisma {
     role: string
     review?: reviewUncheckedCreateNestedManyWithoutUserInput
     applied_jobs?: ApplicationsUncheckedCreateNestedManyWithoutUserInput
+    Resume?: ResumeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type userUpdateInput = {
@@ -6758,6 +8166,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     review?: reviewUpdateManyWithoutUserNestedInput
     applied_jobs?: ApplicationsUpdateManyWithoutUserNestedInput
+    Resume?: ResumeUpdateManyWithoutUserNestedInput
   }
 
   export type userUncheckedUpdateInput = {
@@ -6767,6 +8176,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     review?: reviewUncheckedUpdateManyWithoutUserNestedInput
     applied_jobs?: ApplicationsUncheckedUpdateManyWithoutUserNestedInput
+    Resume?: ResumeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type userCreateManyInput = {
@@ -6854,6 +8264,7 @@ export namespace Prisma {
     job_type: string
     apply_through: string
     company: companyCreateNestedOneWithoutJobsInput
+    applications?: ApplicationsCreateNestedManyWithoutJobsInput
   }
 
   export type jobUncheckedCreateInput = {
@@ -6866,6 +8277,7 @@ export namespace Prisma {
     job_type: string
     apply_through: string
     companyId: string
+    applications?: ApplicationsUncheckedCreateNestedManyWithoutJobsInput
   }
 
   export type jobUpdateInput = {
@@ -6877,6 +8289,7 @@ export namespace Prisma {
     job_type?: StringFieldUpdateOperationsInput | string
     apply_through?: StringFieldUpdateOperationsInput | string
     company?: companyUpdateOneRequiredWithoutJobsNestedInput
+    applications?: ApplicationsUpdateManyWithoutJobsNestedInput
   }
 
   export type jobUncheckedUpdateInput = {
@@ -6888,6 +8301,7 @@ export namespace Prisma {
     job_type?: StringFieldUpdateOperationsInput | string
     apply_through?: StringFieldUpdateOperationsInput | string
     companyId?: StringFieldUpdateOperationsInput | string
+    applications?: ApplicationsUncheckedUpdateManyWithoutJobsNestedInput
   }
 
   export type jobCreateManyInput = {
@@ -6968,39 +8382,128 @@ export namespace Prisma {
 
   export type ApplicationsCreateInput = {
     id?: string
-    job_id: string
     user: userCreateNestedOneWithoutApplied_jobsInput
+    jobs: jobCreateNestedOneWithoutApplicationsInput
+    Resume?: ResumeCreateNestedOneWithoutApplicationsInput
   }
 
   export type ApplicationsUncheckedCreateInput = {
     id?: string
     user_id: string
     job_id: string
+    resumeId?: string | null
   }
 
   export type ApplicationsUpdateInput = {
-    job_id?: StringFieldUpdateOperationsInput | string
     user?: userUpdateOneRequiredWithoutApplied_jobsNestedInput
+    jobs?: jobUpdateOneRequiredWithoutApplicationsNestedInput
+    Resume?: ResumeUpdateOneWithoutApplicationsNestedInput
   }
 
   export type ApplicationsUncheckedUpdateInput = {
     user_id?: StringFieldUpdateOperationsInput | string
     job_id?: StringFieldUpdateOperationsInput | string
+    resumeId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ApplicationsCreateManyInput = {
     id?: string
     user_id: string
     job_id: string
+    resumeId?: string | null
   }
 
   export type ApplicationsUpdateManyMutationInput = {
-    job_id?: StringFieldUpdateOperationsInput | string
+
   }
 
   export type ApplicationsUncheckedUpdateManyInput = {
     user_id?: StringFieldUpdateOperationsInput | string
     job_id?: StringFieldUpdateOperationsInput | string
+    resumeId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ResumeCreateInput = {
+    id?: string
+    title: string
+    summary?: string | null
+    applicationId: string
+    educations?: ResumeCreateeducationsInput | string[]
+    experiences?: ResumeCreateexperiencesInput | string[]
+    skills?: ResumeCreateskillsInput | string[]
+    projects?: ResumeCreateprojectsInput | string[]
+    user: userCreateNestedOneWithoutResumeInput
+    applications?: ApplicationsCreateNestedManyWithoutResumeInput
+  }
+
+  export type ResumeUncheckedCreateInput = {
+    id?: string
+    title: string
+    summary?: string | null
+    userId: string
+    applicationId: string
+    educations?: ResumeCreateeducationsInput | string[]
+    experiences?: ResumeCreateexperiencesInput | string[]
+    skills?: ResumeCreateskillsInput | string[]
+    projects?: ResumeCreateprojectsInput | string[]
+    applications?: ApplicationsUncheckedCreateNestedManyWithoutResumeInput
+  }
+
+  export type ResumeUpdateInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationId?: StringFieldUpdateOperationsInput | string
+    educations?: ResumeUpdateeducationsInput | string[]
+    experiences?: ResumeUpdateexperiencesInput | string[]
+    skills?: ResumeUpdateskillsInput | string[]
+    projects?: ResumeUpdateprojectsInput | string[]
+    user?: userUpdateOneRequiredWithoutResumeNestedInput
+    applications?: ApplicationsUpdateManyWithoutResumeNestedInput
+  }
+
+  export type ResumeUncheckedUpdateInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    educations?: ResumeUpdateeducationsInput | string[]
+    experiences?: ResumeUpdateexperiencesInput | string[]
+    skills?: ResumeUpdateskillsInput | string[]
+    projects?: ResumeUpdateprojectsInput | string[]
+    applications?: ApplicationsUncheckedUpdateManyWithoutResumeNestedInput
+  }
+
+  export type ResumeCreateManyInput = {
+    id?: string
+    title: string
+    summary?: string | null
+    userId: string
+    applicationId: string
+    educations?: ResumeCreateeducationsInput | string[]
+    experiences?: ResumeCreateexperiencesInput | string[]
+    skills?: ResumeCreateskillsInput | string[]
+    projects?: ResumeCreateprojectsInput | string[]
+  }
+
+  export type ResumeUpdateManyMutationInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationId?: StringFieldUpdateOperationsInput | string
+    educations?: ResumeUpdateeducationsInput | string[]
+    experiences?: ResumeUpdateexperiencesInput | string[]
+    skills?: ResumeUpdateskillsInput | string[]
+    projects?: ResumeUpdateprojectsInput | string[]
+  }
+
+  export type ResumeUncheckedUpdateManyInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    educations?: ResumeUpdateeducationsInput | string[]
+    experiences?: ResumeUpdateexperiencesInput | string[]
+    skills?: ResumeUpdateskillsInput | string[]
+    projects?: ResumeUpdateprojectsInput | string[]
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -7030,11 +8533,21 @@ export namespace Prisma {
     none?: ApplicationsWhereInput
   }
 
+  export type ResumeListRelationFilter = {
+    every?: ResumeWhereInput
+    some?: ResumeWhereInput
+    none?: ResumeWhereInput
+  }
+
   export type reviewOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type ApplicationsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ResumeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -7213,22 +8726,106 @@ export namespace Prisma {
     companyId?: SortOrder
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+    isSet?: boolean
+  }
+
+  export type JobScalarRelationFilter = {
+    is?: jobWhereInput
+    isNot?: jobWhereInput
+  }
+
+  export type ResumeNullableScalarRelationFilter = {
+    is?: ResumeWhereInput | null
+    isNot?: ResumeWhereInput | null
+  }
+
   export type ApplicationsCountOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
     job_id?: SortOrder
+    resumeId?: SortOrder
   }
 
   export type ApplicationsMaxOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
     job_id?: SortOrder
+    resumeId?: SortOrder
   }
 
   export type ApplicationsMinOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
     job_id?: SortOrder
+    resumeId?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+    isSet?: boolean
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type ResumeCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    summary?: SortOrder
+    userId?: SortOrder
+    applicationId?: SortOrder
+    educations?: SortOrder
+    experiences?: SortOrder
+    skills?: SortOrder
+    projects?: SortOrder
+  }
+
+  export type ResumeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    summary?: SortOrder
+    userId?: SortOrder
+    applicationId?: SortOrder
+  }
+
+  export type ResumeMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    summary?: SortOrder
+    userId?: SortOrder
+    applicationId?: SortOrder
   }
 
   export type reviewCreateNestedManyWithoutUserInput = {
@@ -7245,6 +8842,13 @@ export namespace Prisma {
     connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
   }
 
+  export type ResumeCreateNestedManyWithoutUserInput = {
+    create?: XOR<ResumeCreateWithoutUserInput, ResumeUncheckedCreateWithoutUserInput> | ResumeCreateWithoutUserInput[] | ResumeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResumeCreateOrConnectWithoutUserInput | ResumeCreateOrConnectWithoutUserInput[]
+    createMany?: ResumeCreateManyUserInputEnvelope
+    connect?: ResumeWhereUniqueInput | ResumeWhereUniqueInput[]
+  }
+
   export type reviewUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<reviewCreateWithoutUserInput, reviewUncheckedCreateWithoutUserInput> | reviewCreateWithoutUserInput[] | reviewUncheckedCreateWithoutUserInput[]
     connectOrCreate?: reviewCreateOrConnectWithoutUserInput | reviewCreateOrConnectWithoutUserInput[]
@@ -7257,6 +8861,13 @@ export namespace Prisma {
     connectOrCreate?: ApplicationsCreateOrConnectWithoutUserInput | ApplicationsCreateOrConnectWithoutUserInput[]
     createMany?: ApplicationsCreateManyUserInputEnvelope
     connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+  }
+
+  export type ResumeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ResumeCreateWithoutUserInput, ResumeUncheckedCreateWithoutUserInput> | ResumeCreateWithoutUserInput[] | ResumeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResumeCreateOrConnectWithoutUserInput | ResumeCreateOrConnectWithoutUserInput[]
+    createMany?: ResumeCreateManyUserInputEnvelope
+    connect?: ResumeWhereUniqueInput | ResumeWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -7291,6 +8902,20 @@ export namespace Prisma {
     deleteMany?: ApplicationsScalarWhereInput | ApplicationsScalarWhereInput[]
   }
 
+  export type ResumeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ResumeCreateWithoutUserInput, ResumeUncheckedCreateWithoutUserInput> | ResumeCreateWithoutUserInput[] | ResumeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResumeCreateOrConnectWithoutUserInput | ResumeCreateOrConnectWithoutUserInput[]
+    upsert?: ResumeUpsertWithWhereUniqueWithoutUserInput | ResumeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ResumeCreateManyUserInputEnvelope
+    set?: ResumeWhereUniqueInput | ResumeWhereUniqueInput[]
+    disconnect?: ResumeWhereUniqueInput | ResumeWhereUniqueInput[]
+    delete?: ResumeWhereUniqueInput | ResumeWhereUniqueInput[]
+    connect?: ResumeWhereUniqueInput | ResumeWhereUniqueInput[]
+    update?: ResumeUpdateWithWhereUniqueWithoutUserInput | ResumeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ResumeUpdateManyWithWhereWithoutUserInput | ResumeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ResumeScalarWhereInput | ResumeScalarWhereInput[]
+  }
+
   export type reviewUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<reviewCreateWithoutUserInput, reviewUncheckedCreateWithoutUserInput> | reviewCreateWithoutUserInput[] | reviewUncheckedCreateWithoutUserInput[]
     connectOrCreate?: reviewCreateOrConnectWithoutUserInput | reviewCreateOrConnectWithoutUserInput[]
@@ -7317,6 +8942,20 @@ export namespace Prisma {
     update?: ApplicationsUpdateWithWhereUniqueWithoutUserInput | ApplicationsUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ApplicationsUpdateManyWithWhereWithoutUserInput | ApplicationsUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: ApplicationsScalarWhereInput | ApplicationsScalarWhereInput[]
+  }
+
+  export type ResumeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ResumeCreateWithoutUserInput, ResumeUncheckedCreateWithoutUserInput> | ResumeCreateWithoutUserInput[] | ResumeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResumeCreateOrConnectWithoutUserInput | ResumeCreateOrConnectWithoutUserInput[]
+    upsert?: ResumeUpsertWithWhereUniqueWithoutUserInput | ResumeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ResumeCreateManyUserInputEnvelope
+    set?: ResumeWhereUniqueInput | ResumeWhereUniqueInput[]
+    disconnect?: ResumeWhereUniqueInput | ResumeWhereUniqueInput[]
+    delete?: ResumeWhereUniqueInput | ResumeWhereUniqueInput[]
+    connect?: ResumeWhereUniqueInput | ResumeWhereUniqueInput[]
+    update?: ResumeUpdateWithWhereUniqueWithoutUserInput | ResumeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ResumeUpdateManyWithWhereWithoutUserInput | ResumeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ResumeScalarWhereInput | ResumeScalarWhereInput[]
   }
 
   export type jobCreateNestedManyWithoutCompanyInput = {
@@ -7409,6 +9048,20 @@ export namespace Prisma {
     connect?: companyWhereUniqueInput
   }
 
+  export type ApplicationsCreateNestedManyWithoutJobsInput = {
+    create?: XOR<ApplicationsCreateWithoutJobsInput, ApplicationsUncheckedCreateWithoutJobsInput> | ApplicationsCreateWithoutJobsInput[] | ApplicationsUncheckedCreateWithoutJobsInput[]
+    connectOrCreate?: ApplicationsCreateOrConnectWithoutJobsInput | ApplicationsCreateOrConnectWithoutJobsInput[]
+    createMany?: ApplicationsCreateManyJobsInputEnvelope
+    connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+  }
+
+  export type ApplicationsUncheckedCreateNestedManyWithoutJobsInput = {
+    create?: XOR<ApplicationsCreateWithoutJobsInput, ApplicationsUncheckedCreateWithoutJobsInput> | ApplicationsCreateWithoutJobsInput[] | ApplicationsUncheckedCreateWithoutJobsInput[]
+    connectOrCreate?: ApplicationsCreateOrConnectWithoutJobsInput | ApplicationsCreateOrConnectWithoutJobsInput[]
+    createMany?: ApplicationsCreateManyJobsInputEnvelope
+    connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -7423,6 +9076,34 @@ export namespace Prisma {
     upsert?: companyUpsertWithoutJobsInput
     connect?: companyWhereUniqueInput
     update?: XOR<XOR<companyUpdateToOneWithWhereWithoutJobsInput, companyUpdateWithoutJobsInput>, companyUncheckedUpdateWithoutJobsInput>
+  }
+
+  export type ApplicationsUpdateManyWithoutJobsNestedInput = {
+    create?: XOR<ApplicationsCreateWithoutJobsInput, ApplicationsUncheckedCreateWithoutJobsInput> | ApplicationsCreateWithoutJobsInput[] | ApplicationsUncheckedCreateWithoutJobsInput[]
+    connectOrCreate?: ApplicationsCreateOrConnectWithoutJobsInput | ApplicationsCreateOrConnectWithoutJobsInput[]
+    upsert?: ApplicationsUpsertWithWhereUniqueWithoutJobsInput | ApplicationsUpsertWithWhereUniqueWithoutJobsInput[]
+    createMany?: ApplicationsCreateManyJobsInputEnvelope
+    set?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    disconnect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    delete?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    update?: ApplicationsUpdateWithWhereUniqueWithoutJobsInput | ApplicationsUpdateWithWhereUniqueWithoutJobsInput[]
+    updateMany?: ApplicationsUpdateManyWithWhereWithoutJobsInput | ApplicationsUpdateManyWithWhereWithoutJobsInput[]
+    deleteMany?: ApplicationsScalarWhereInput | ApplicationsScalarWhereInput[]
+  }
+
+  export type ApplicationsUncheckedUpdateManyWithoutJobsNestedInput = {
+    create?: XOR<ApplicationsCreateWithoutJobsInput, ApplicationsUncheckedCreateWithoutJobsInput> | ApplicationsCreateWithoutJobsInput[] | ApplicationsUncheckedCreateWithoutJobsInput[]
+    connectOrCreate?: ApplicationsCreateOrConnectWithoutJobsInput | ApplicationsCreateOrConnectWithoutJobsInput[]
+    upsert?: ApplicationsUpsertWithWhereUniqueWithoutJobsInput | ApplicationsUpsertWithWhereUniqueWithoutJobsInput[]
+    createMany?: ApplicationsCreateManyJobsInputEnvelope
+    set?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    disconnect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    delete?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    update?: ApplicationsUpdateWithWhereUniqueWithoutJobsInput | ApplicationsUpdateWithWhereUniqueWithoutJobsInput[]
+    updateMany?: ApplicationsUpdateManyWithWhereWithoutJobsInput | ApplicationsUpdateManyWithWhereWithoutJobsInput[]
+    deleteMany?: ApplicationsScalarWhereInput | ApplicationsScalarWhereInput[]
   }
 
   export type userCreateNestedOneWithoutReviewInput = {
@@ -7459,12 +9140,139 @@ export namespace Prisma {
     connect?: userWhereUniqueInput
   }
 
+  export type jobCreateNestedOneWithoutApplicationsInput = {
+    create?: XOR<jobCreateWithoutApplicationsInput, jobUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: jobCreateOrConnectWithoutApplicationsInput
+    connect?: jobWhereUniqueInput
+  }
+
+  export type ResumeCreateNestedOneWithoutApplicationsInput = {
+    create?: XOR<ResumeCreateWithoutApplicationsInput, ResumeUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: ResumeCreateOrConnectWithoutApplicationsInput
+    connect?: ResumeWhereUniqueInput
+  }
+
   export type userUpdateOneRequiredWithoutApplied_jobsNestedInput = {
     create?: XOR<userCreateWithoutApplied_jobsInput, userUncheckedCreateWithoutApplied_jobsInput>
     connectOrCreate?: userCreateOrConnectWithoutApplied_jobsInput
     upsert?: userUpsertWithoutApplied_jobsInput
     connect?: userWhereUniqueInput
     update?: XOR<XOR<userUpdateToOneWithWhereWithoutApplied_jobsInput, userUpdateWithoutApplied_jobsInput>, userUncheckedUpdateWithoutApplied_jobsInput>
+  }
+
+  export type jobUpdateOneRequiredWithoutApplicationsNestedInput = {
+    create?: XOR<jobCreateWithoutApplicationsInput, jobUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: jobCreateOrConnectWithoutApplicationsInput
+    upsert?: jobUpsertWithoutApplicationsInput
+    connect?: jobWhereUniqueInput
+    update?: XOR<XOR<jobUpdateToOneWithWhereWithoutApplicationsInput, jobUpdateWithoutApplicationsInput>, jobUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type ResumeUpdateOneWithoutApplicationsNestedInput = {
+    create?: XOR<ResumeCreateWithoutApplicationsInput, ResumeUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: ResumeCreateOrConnectWithoutApplicationsInput
+    upsert?: ResumeUpsertWithoutApplicationsInput
+    disconnect?: boolean
+    delete?: ResumeWhereInput | boolean
+    connect?: ResumeWhereUniqueInput
+    update?: XOR<XOR<ResumeUpdateToOneWithWhereWithoutApplicationsInput, ResumeUpdateWithoutApplicationsInput>, ResumeUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+    unset?: boolean
+  }
+
+  export type ResumeCreateeducationsInput = {
+    set: string[]
+  }
+
+  export type ResumeCreateexperiencesInput = {
+    set: string[]
+  }
+
+  export type ResumeCreateskillsInput = {
+    set: string[]
+  }
+
+  export type ResumeCreateprojectsInput = {
+    set: string[]
+  }
+
+  export type userCreateNestedOneWithoutResumeInput = {
+    create?: XOR<userCreateWithoutResumeInput, userUncheckedCreateWithoutResumeInput>
+    connectOrCreate?: userCreateOrConnectWithoutResumeInput
+    connect?: userWhereUniqueInput
+  }
+
+  export type ApplicationsCreateNestedManyWithoutResumeInput = {
+    create?: XOR<ApplicationsCreateWithoutResumeInput, ApplicationsUncheckedCreateWithoutResumeInput> | ApplicationsCreateWithoutResumeInput[] | ApplicationsUncheckedCreateWithoutResumeInput[]
+    connectOrCreate?: ApplicationsCreateOrConnectWithoutResumeInput | ApplicationsCreateOrConnectWithoutResumeInput[]
+    createMany?: ApplicationsCreateManyResumeInputEnvelope
+    connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+  }
+
+  export type ApplicationsUncheckedCreateNestedManyWithoutResumeInput = {
+    create?: XOR<ApplicationsCreateWithoutResumeInput, ApplicationsUncheckedCreateWithoutResumeInput> | ApplicationsCreateWithoutResumeInput[] | ApplicationsUncheckedCreateWithoutResumeInput[]
+    connectOrCreate?: ApplicationsCreateOrConnectWithoutResumeInput | ApplicationsCreateOrConnectWithoutResumeInput[]
+    createMany?: ApplicationsCreateManyResumeInputEnvelope
+    connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+  }
+
+  export type ResumeUpdateeducationsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ResumeUpdateexperiencesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ResumeUpdateskillsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ResumeUpdateprojectsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type userUpdateOneRequiredWithoutResumeNestedInput = {
+    create?: XOR<userCreateWithoutResumeInput, userUncheckedCreateWithoutResumeInput>
+    connectOrCreate?: userCreateOrConnectWithoutResumeInput
+    upsert?: userUpsertWithoutResumeInput
+    connect?: userWhereUniqueInput
+    update?: XOR<XOR<userUpdateToOneWithWhereWithoutResumeInput, userUpdateWithoutResumeInput>, userUncheckedUpdateWithoutResumeInput>
+  }
+
+  export type ApplicationsUpdateManyWithoutResumeNestedInput = {
+    create?: XOR<ApplicationsCreateWithoutResumeInput, ApplicationsUncheckedCreateWithoutResumeInput> | ApplicationsCreateWithoutResumeInput[] | ApplicationsUncheckedCreateWithoutResumeInput[]
+    connectOrCreate?: ApplicationsCreateOrConnectWithoutResumeInput | ApplicationsCreateOrConnectWithoutResumeInput[]
+    upsert?: ApplicationsUpsertWithWhereUniqueWithoutResumeInput | ApplicationsUpsertWithWhereUniqueWithoutResumeInput[]
+    createMany?: ApplicationsCreateManyResumeInputEnvelope
+    set?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    disconnect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    delete?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    update?: ApplicationsUpdateWithWhereUniqueWithoutResumeInput | ApplicationsUpdateWithWhereUniqueWithoutResumeInput[]
+    updateMany?: ApplicationsUpdateManyWithWhereWithoutResumeInput | ApplicationsUpdateManyWithWhereWithoutResumeInput[]
+    deleteMany?: ApplicationsScalarWhereInput | ApplicationsScalarWhereInput[]
+  }
+
+  export type ApplicationsUncheckedUpdateManyWithoutResumeNestedInput = {
+    create?: XOR<ApplicationsCreateWithoutResumeInput, ApplicationsUncheckedCreateWithoutResumeInput> | ApplicationsCreateWithoutResumeInput[] | ApplicationsUncheckedCreateWithoutResumeInput[]
+    connectOrCreate?: ApplicationsCreateOrConnectWithoutResumeInput | ApplicationsCreateOrConnectWithoutResumeInput[]
+    upsert?: ApplicationsUpsertWithWhereUniqueWithoutResumeInput | ApplicationsUpsertWithWhereUniqueWithoutResumeInput[]
+    createMany?: ApplicationsCreateManyResumeInputEnvelope
+    set?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    disconnect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    delete?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    update?: ApplicationsUpdateWithWhereUniqueWithoutResumeInput | ApplicationsUpdateWithWhereUniqueWithoutResumeInput[]
+    updateMany?: ApplicationsUpdateManyWithWhereWithoutResumeInput | ApplicationsUpdateManyWithWhereWithoutResumeInput[]
+    deleteMany?: ApplicationsScalarWhereInput | ApplicationsScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -7536,6 +9344,51 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+    isSet?: boolean
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+    isSet?: boolean
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    isSet?: boolean
+  }
+
   export type reviewCreateWithoutUserInput = {
     id?: string
     content: string
@@ -7559,12 +9412,14 @@ export namespace Prisma {
 
   export type ApplicationsCreateWithoutUserInput = {
     id?: string
-    job_id: string
+    jobs: jobCreateNestedOneWithoutApplicationsInput
+    Resume?: ResumeCreateNestedOneWithoutApplicationsInput
   }
 
   export type ApplicationsUncheckedCreateWithoutUserInput = {
     id?: string
     job_id: string
+    resumeId?: string | null
   }
 
   export type ApplicationsCreateOrConnectWithoutUserInput = {
@@ -7574,6 +9429,39 @@ export namespace Prisma {
 
   export type ApplicationsCreateManyUserInputEnvelope = {
     data: ApplicationsCreateManyUserInput | ApplicationsCreateManyUserInput[]
+  }
+
+  export type ResumeCreateWithoutUserInput = {
+    id?: string
+    title: string
+    summary?: string | null
+    applicationId: string
+    educations?: ResumeCreateeducationsInput | string[]
+    experiences?: ResumeCreateexperiencesInput | string[]
+    skills?: ResumeCreateskillsInput | string[]
+    projects?: ResumeCreateprojectsInput | string[]
+    applications?: ApplicationsCreateNestedManyWithoutResumeInput
+  }
+
+  export type ResumeUncheckedCreateWithoutUserInput = {
+    id?: string
+    title: string
+    summary?: string | null
+    applicationId: string
+    educations?: ResumeCreateeducationsInput | string[]
+    experiences?: ResumeCreateexperiencesInput | string[]
+    skills?: ResumeCreateskillsInput | string[]
+    projects?: ResumeCreateprojectsInput | string[]
+    applications?: ApplicationsUncheckedCreateNestedManyWithoutResumeInput
+  }
+
+  export type ResumeCreateOrConnectWithoutUserInput = {
+    where: ResumeWhereUniqueInput
+    create: XOR<ResumeCreateWithoutUserInput, ResumeUncheckedCreateWithoutUserInput>
+  }
+
+  export type ResumeCreateManyUserInputEnvelope = {
+    data: ResumeCreateManyUserInput | ResumeCreateManyUserInput[]
   }
 
   export type reviewUpsertWithWhereUniqueWithoutUserInput = {
@@ -7625,6 +9513,38 @@ export namespace Prisma {
     id?: StringFilter<"Applications"> | string
     user_id?: StringFilter<"Applications"> | string
     job_id?: StringFilter<"Applications"> | string
+    resumeId?: StringNullableFilter<"Applications"> | string | null
+  }
+
+  export type ResumeUpsertWithWhereUniqueWithoutUserInput = {
+    where: ResumeWhereUniqueInput
+    update: XOR<ResumeUpdateWithoutUserInput, ResumeUncheckedUpdateWithoutUserInput>
+    create: XOR<ResumeCreateWithoutUserInput, ResumeUncheckedCreateWithoutUserInput>
+  }
+
+  export type ResumeUpdateWithWhereUniqueWithoutUserInput = {
+    where: ResumeWhereUniqueInput
+    data: XOR<ResumeUpdateWithoutUserInput, ResumeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ResumeUpdateManyWithWhereWithoutUserInput = {
+    where: ResumeScalarWhereInput
+    data: XOR<ResumeUpdateManyMutationInput, ResumeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ResumeScalarWhereInput = {
+    AND?: ResumeScalarWhereInput | ResumeScalarWhereInput[]
+    OR?: ResumeScalarWhereInput[]
+    NOT?: ResumeScalarWhereInput | ResumeScalarWhereInput[]
+    id?: StringFilter<"Resume"> | string
+    title?: StringFilter<"Resume"> | string
+    summary?: StringNullableFilter<"Resume"> | string | null
+    userId?: StringFilter<"Resume"> | string
+    applicationId?: StringFilter<"Resume"> | string
+    educations?: StringNullableListFilter<"Resume">
+    experiences?: StringNullableListFilter<"Resume">
+    skills?: StringNullableListFilter<"Resume">
+    projects?: StringNullableListFilter<"Resume">
   }
 
   export type jobCreateWithoutCompanyInput = {
@@ -7636,6 +9556,7 @@ export namespace Prisma {
     employment_type: string
     job_type: string
     apply_through: string
+    applications?: ApplicationsCreateNestedManyWithoutJobsInput
   }
 
   export type jobUncheckedCreateWithoutCompanyInput = {
@@ -7647,6 +9568,7 @@ export namespace Prisma {
     employment_type: string
     job_type: string
     apply_through: string
+    applications?: ApplicationsUncheckedCreateNestedManyWithoutJobsInput
   }
 
   export type jobCreateOrConnectWithoutCompanyInput = {
@@ -7747,6 +9669,27 @@ export namespace Prisma {
     create: XOR<companyCreateWithoutJobsInput, companyUncheckedCreateWithoutJobsInput>
   }
 
+  export type ApplicationsCreateWithoutJobsInput = {
+    id?: string
+    user: userCreateNestedOneWithoutApplied_jobsInput
+    Resume?: ResumeCreateNestedOneWithoutApplicationsInput
+  }
+
+  export type ApplicationsUncheckedCreateWithoutJobsInput = {
+    id?: string
+    user_id: string
+    resumeId?: string | null
+  }
+
+  export type ApplicationsCreateOrConnectWithoutJobsInput = {
+    where: ApplicationsWhereUniqueInput
+    create: XOR<ApplicationsCreateWithoutJobsInput, ApplicationsUncheckedCreateWithoutJobsInput>
+  }
+
+  export type ApplicationsCreateManyJobsInputEnvelope = {
+    data: ApplicationsCreateManyJobsInput | ApplicationsCreateManyJobsInput[]
+  }
+
   export type companyUpsertWithoutJobsInput = {
     update: XOR<companyUpdateWithoutJobsInput, companyUncheckedUpdateWithoutJobsInput>
     create: XOR<companyCreateWithoutJobsInput, companyUncheckedCreateWithoutJobsInput>
@@ -7772,6 +9715,22 @@ export namespace Prisma {
     review?: reviewUncheckedUpdateManyWithoutCompanyNestedInput
   }
 
+  export type ApplicationsUpsertWithWhereUniqueWithoutJobsInput = {
+    where: ApplicationsWhereUniqueInput
+    update: XOR<ApplicationsUpdateWithoutJobsInput, ApplicationsUncheckedUpdateWithoutJobsInput>
+    create: XOR<ApplicationsCreateWithoutJobsInput, ApplicationsUncheckedCreateWithoutJobsInput>
+  }
+
+  export type ApplicationsUpdateWithWhereUniqueWithoutJobsInput = {
+    where: ApplicationsWhereUniqueInput
+    data: XOR<ApplicationsUpdateWithoutJobsInput, ApplicationsUncheckedUpdateWithoutJobsInput>
+  }
+
+  export type ApplicationsUpdateManyWithWhereWithoutJobsInput = {
+    where: ApplicationsScalarWhereInput
+    data: XOR<ApplicationsUpdateManyMutationInput, ApplicationsUncheckedUpdateManyWithoutJobsInput>
+  }
+
   export type userCreateWithoutReviewInput = {
     id?: string
     name: string
@@ -7779,6 +9738,7 @@ export namespace Prisma {
     password: string
     role: string
     applied_jobs?: ApplicationsCreateNestedManyWithoutUserInput
+    Resume?: ResumeCreateNestedManyWithoutUserInput
   }
 
   export type userUncheckedCreateWithoutReviewInput = {
@@ -7788,6 +9748,7 @@ export namespace Prisma {
     password: string
     role: string
     applied_jobs?: ApplicationsUncheckedCreateNestedManyWithoutUserInput
+    Resume?: ResumeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type userCreateOrConnectWithoutReviewInput = {
@@ -7833,6 +9794,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     applied_jobs?: ApplicationsUpdateManyWithoutUserNestedInput
+    Resume?: ResumeUpdateManyWithoutUserNestedInput
   }
 
   export type userUncheckedUpdateWithoutReviewInput = {
@@ -7841,6 +9803,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     applied_jobs?: ApplicationsUncheckedUpdateManyWithoutUserNestedInput
+    Resume?: ResumeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type companyUpsertWithoutReviewInput = {
@@ -7875,6 +9838,7 @@ export namespace Prisma {
     password: string
     role: string
     review?: reviewCreateNestedManyWithoutUserInput
+    Resume?: ResumeCreateNestedManyWithoutUserInput
   }
 
   export type userUncheckedCreateWithoutApplied_jobsInput = {
@@ -7884,11 +9848,70 @@ export namespace Prisma {
     password: string
     role: string
     review?: reviewUncheckedCreateNestedManyWithoutUserInput
+    Resume?: ResumeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type userCreateOrConnectWithoutApplied_jobsInput = {
     where: userWhereUniqueInput
     create: XOR<userCreateWithoutApplied_jobsInput, userUncheckedCreateWithoutApplied_jobsInput>
+  }
+
+  export type jobCreateWithoutApplicationsInput = {
+    id?: string
+    title: string
+    description: string
+    location: string
+    salary: number
+    employment_type: string
+    job_type: string
+    apply_through: string
+    company: companyCreateNestedOneWithoutJobsInput
+  }
+
+  export type jobUncheckedCreateWithoutApplicationsInput = {
+    id?: string
+    title: string
+    description: string
+    location: string
+    salary: number
+    employment_type: string
+    job_type: string
+    apply_through: string
+    companyId: string
+  }
+
+  export type jobCreateOrConnectWithoutApplicationsInput = {
+    where: jobWhereUniqueInput
+    create: XOR<jobCreateWithoutApplicationsInput, jobUncheckedCreateWithoutApplicationsInput>
+  }
+
+  export type ResumeCreateWithoutApplicationsInput = {
+    id?: string
+    title: string
+    summary?: string | null
+    applicationId: string
+    educations?: ResumeCreateeducationsInput | string[]
+    experiences?: ResumeCreateexperiencesInput | string[]
+    skills?: ResumeCreateskillsInput | string[]
+    projects?: ResumeCreateprojectsInput | string[]
+    user: userCreateNestedOneWithoutResumeInput
+  }
+
+  export type ResumeUncheckedCreateWithoutApplicationsInput = {
+    id?: string
+    title: string
+    summary?: string | null
+    userId: string
+    applicationId: string
+    educations?: ResumeCreateeducationsInput | string[]
+    experiences?: ResumeCreateexperiencesInput | string[]
+    skills?: ResumeCreateskillsInput | string[]
+    projects?: ResumeCreateprojectsInput | string[]
+  }
+
+  export type ResumeCreateOrConnectWithoutApplicationsInput = {
+    where: ResumeWhereUniqueInput
+    create: XOR<ResumeCreateWithoutApplicationsInput, ResumeUncheckedCreateWithoutApplicationsInput>
   }
 
   export type userUpsertWithoutApplied_jobsInput = {
@@ -7908,6 +9931,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     review?: reviewUpdateManyWithoutUserNestedInput
+    Resume?: ResumeUpdateManyWithoutUserNestedInput
   }
 
   export type userUncheckedUpdateWithoutApplied_jobsInput = {
@@ -7916,6 +9940,164 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     review?: reviewUncheckedUpdateManyWithoutUserNestedInput
+    Resume?: ResumeUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type jobUpsertWithoutApplicationsInput = {
+    update: XOR<jobUpdateWithoutApplicationsInput, jobUncheckedUpdateWithoutApplicationsInput>
+    create: XOR<jobCreateWithoutApplicationsInput, jobUncheckedCreateWithoutApplicationsInput>
+    where?: jobWhereInput
+  }
+
+  export type jobUpdateToOneWithWhereWithoutApplicationsInput = {
+    where?: jobWhereInput
+    data: XOR<jobUpdateWithoutApplicationsInput, jobUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type jobUpdateWithoutApplicationsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    salary?: IntFieldUpdateOperationsInput | number
+    employment_type?: StringFieldUpdateOperationsInput | string
+    job_type?: StringFieldUpdateOperationsInput | string
+    apply_through?: StringFieldUpdateOperationsInput | string
+    company?: companyUpdateOneRequiredWithoutJobsNestedInput
+  }
+
+  export type jobUncheckedUpdateWithoutApplicationsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    salary?: IntFieldUpdateOperationsInput | number
+    employment_type?: StringFieldUpdateOperationsInput | string
+    job_type?: StringFieldUpdateOperationsInput | string
+    apply_through?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ResumeUpsertWithoutApplicationsInput = {
+    update: XOR<ResumeUpdateWithoutApplicationsInput, ResumeUncheckedUpdateWithoutApplicationsInput>
+    create: XOR<ResumeCreateWithoutApplicationsInput, ResumeUncheckedCreateWithoutApplicationsInput>
+    where?: ResumeWhereInput
+  }
+
+  export type ResumeUpdateToOneWithWhereWithoutApplicationsInput = {
+    where?: ResumeWhereInput
+    data: XOR<ResumeUpdateWithoutApplicationsInput, ResumeUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type ResumeUpdateWithoutApplicationsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationId?: StringFieldUpdateOperationsInput | string
+    educations?: ResumeUpdateeducationsInput | string[]
+    experiences?: ResumeUpdateexperiencesInput | string[]
+    skills?: ResumeUpdateskillsInput | string[]
+    projects?: ResumeUpdateprojectsInput | string[]
+    user?: userUpdateOneRequiredWithoutResumeNestedInput
+  }
+
+  export type ResumeUncheckedUpdateWithoutApplicationsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    educations?: ResumeUpdateeducationsInput | string[]
+    experiences?: ResumeUpdateexperiencesInput | string[]
+    skills?: ResumeUpdateskillsInput | string[]
+    projects?: ResumeUpdateprojectsInput | string[]
+  }
+
+  export type userCreateWithoutResumeInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role: string
+    review?: reviewCreateNestedManyWithoutUserInput
+    applied_jobs?: ApplicationsCreateNestedManyWithoutUserInput
+  }
+
+  export type userUncheckedCreateWithoutResumeInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role: string
+    review?: reviewUncheckedCreateNestedManyWithoutUserInput
+    applied_jobs?: ApplicationsUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type userCreateOrConnectWithoutResumeInput = {
+    where: userWhereUniqueInput
+    create: XOR<userCreateWithoutResumeInput, userUncheckedCreateWithoutResumeInput>
+  }
+
+  export type ApplicationsCreateWithoutResumeInput = {
+    id?: string
+    user: userCreateNestedOneWithoutApplied_jobsInput
+    jobs: jobCreateNestedOneWithoutApplicationsInput
+  }
+
+  export type ApplicationsUncheckedCreateWithoutResumeInput = {
+    id?: string
+    user_id: string
+    job_id: string
+  }
+
+  export type ApplicationsCreateOrConnectWithoutResumeInput = {
+    where: ApplicationsWhereUniqueInput
+    create: XOR<ApplicationsCreateWithoutResumeInput, ApplicationsUncheckedCreateWithoutResumeInput>
+  }
+
+  export type ApplicationsCreateManyResumeInputEnvelope = {
+    data: ApplicationsCreateManyResumeInput | ApplicationsCreateManyResumeInput[]
+  }
+
+  export type userUpsertWithoutResumeInput = {
+    update: XOR<userUpdateWithoutResumeInput, userUncheckedUpdateWithoutResumeInput>
+    create: XOR<userCreateWithoutResumeInput, userUncheckedCreateWithoutResumeInput>
+    where?: userWhereInput
+  }
+
+  export type userUpdateToOneWithWhereWithoutResumeInput = {
+    where?: userWhereInput
+    data: XOR<userUpdateWithoutResumeInput, userUncheckedUpdateWithoutResumeInput>
+  }
+
+  export type userUpdateWithoutResumeInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    review?: reviewUpdateManyWithoutUserNestedInput
+    applied_jobs?: ApplicationsUpdateManyWithoutUserNestedInput
+  }
+
+  export type userUncheckedUpdateWithoutResumeInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    review?: reviewUncheckedUpdateManyWithoutUserNestedInput
+    applied_jobs?: ApplicationsUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ApplicationsUpsertWithWhereUniqueWithoutResumeInput = {
+    where: ApplicationsWhereUniqueInput
+    update: XOR<ApplicationsUpdateWithoutResumeInput, ApplicationsUncheckedUpdateWithoutResumeInput>
+    create: XOR<ApplicationsCreateWithoutResumeInput, ApplicationsUncheckedCreateWithoutResumeInput>
+  }
+
+  export type ApplicationsUpdateWithWhereUniqueWithoutResumeInput = {
+    where: ApplicationsWhereUniqueInput
+    data: XOR<ApplicationsUpdateWithoutResumeInput, ApplicationsUncheckedUpdateWithoutResumeInput>
+  }
+
+  export type ApplicationsUpdateManyWithWhereWithoutResumeInput = {
+    where: ApplicationsScalarWhereInput
+    data: XOR<ApplicationsUpdateManyMutationInput, ApplicationsUncheckedUpdateManyWithoutResumeInput>
   }
 
   export type reviewCreateManyUserInput = {
@@ -7927,6 +10109,18 @@ export namespace Prisma {
   export type ApplicationsCreateManyUserInput = {
     id?: string
     job_id: string
+    resumeId?: string | null
+  }
+
+  export type ResumeCreateManyUserInput = {
+    id?: string
+    title: string
+    summary?: string | null
+    applicationId: string
+    educations?: ResumeCreateeducationsInput | string[]
+    experiences?: ResumeCreateexperiencesInput | string[]
+    skills?: ResumeCreateskillsInput | string[]
+    projects?: ResumeCreateprojectsInput | string[]
   }
 
   export type reviewUpdateWithoutUserInput = {
@@ -7945,15 +10139,50 @@ export namespace Prisma {
   }
 
   export type ApplicationsUpdateWithoutUserInput = {
-    job_id?: StringFieldUpdateOperationsInput | string
+    jobs?: jobUpdateOneRequiredWithoutApplicationsNestedInput
+    Resume?: ResumeUpdateOneWithoutApplicationsNestedInput
   }
 
   export type ApplicationsUncheckedUpdateWithoutUserInput = {
     job_id?: StringFieldUpdateOperationsInput | string
+    resumeId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ApplicationsUncheckedUpdateManyWithoutUserInput = {
     job_id?: StringFieldUpdateOperationsInput | string
+    resumeId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ResumeUpdateWithoutUserInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationId?: StringFieldUpdateOperationsInput | string
+    educations?: ResumeUpdateeducationsInput | string[]
+    experiences?: ResumeUpdateexperiencesInput | string[]
+    skills?: ResumeUpdateskillsInput | string[]
+    projects?: ResumeUpdateprojectsInput | string[]
+    applications?: ApplicationsUpdateManyWithoutResumeNestedInput
+  }
+
+  export type ResumeUncheckedUpdateWithoutUserInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationId?: StringFieldUpdateOperationsInput | string
+    educations?: ResumeUpdateeducationsInput | string[]
+    experiences?: ResumeUpdateexperiencesInput | string[]
+    skills?: ResumeUpdateskillsInput | string[]
+    projects?: ResumeUpdateprojectsInput | string[]
+    applications?: ApplicationsUncheckedUpdateManyWithoutResumeNestedInput
+  }
+
+  export type ResumeUncheckedUpdateManyWithoutUserInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationId?: StringFieldUpdateOperationsInput | string
+    educations?: ResumeUpdateeducationsInput | string[]
+    experiences?: ResumeUpdateexperiencesInput | string[]
+    skills?: ResumeUpdateskillsInput | string[]
+    projects?: ResumeUpdateprojectsInput | string[]
   }
 
   export type jobCreateManyCompanyInput = {
@@ -7981,6 +10210,7 @@ export namespace Prisma {
     employment_type?: StringFieldUpdateOperationsInput | string
     job_type?: StringFieldUpdateOperationsInput | string
     apply_through?: StringFieldUpdateOperationsInput | string
+    applications?: ApplicationsUpdateManyWithoutJobsNestedInput
   }
 
   export type jobUncheckedUpdateWithoutCompanyInput = {
@@ -7991,6 +10221,7 @@ export namespace Prisma {
     employment_type?: StringFieldUpdateOperationsInput | string
     job_type?: StringFieldUpdateOperationsInput | string
     apply_through?: StringFieldUpdateOperationsInput | string
+    applications?: ApplicationsUncheckedUpdateManyWithoutJobsNestedInput
   }
 
   export type jobUncheckedUpdateManyWithoutCompanyInput = {
@@ -8016,6 +10247,48 @@ export namespace Prisma {
   export type reviewUncheckedUpdateManyWithoutCompanyInput = {
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationsCreateManyJobsInput = {
+    id?: string
+    user_id: string
+    resumeId?: string | null
+  }
+
+  export type ApplicationsUpdateWithoutJobsInput = {
+    user?: userUpdateOneRequiredWithoutApplied_jobsNestedInput
+    Resume?: ResumeUpdateOneWithoutApplicationsNestedInput
+  }
+
+  export type ApplicationsUncheckedUpdateWithoutJobsInput = {
+    user_id?: StringFieldUpdateOperationsInput | string
+    resumeId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ApplicationsUncheckedUpdateManyWithoutJobsInput = {
+    user_id?: StringFieldUpdateOperationsInput | string
+    resumeId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ApplicationsCreateManyResumeInput = {
+    id?: string
+    user_id: string
+    job_id: string
+  }
+
+  export type ApplicationsUpdateWithoutResumeInput = {
+    user?: userUpdateOneRequiredWithoutApplied_jobsNestedInput
+    jobs?: jobUpdateOneRequiredWithoutApplicationsNestedInput
+  }
+
+  export type ApplicationsUncheckedUpdateWithoutResumeInput = {
+    user_id?: StringFieldUpdateOperationsInput | string
+    job_id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationsUncheckedUpdateManyWithoutResumeInput = {
+    user_id?: StringFieldUpdateOperationsInput | string
+    job_id?: StringFieldUpdateOperationsInput | string
   }
 
 

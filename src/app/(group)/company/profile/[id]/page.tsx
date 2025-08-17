@@ -10,12 +10,11 @@ import {
   Text,
   TextArea,
 } from "@radix-ui/themes";
-import { BookmarkIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import CompanyJobCard from "@/components/cards/CompanyJobCard";
 import { job, user, review, company } from "../../../../../../generated/prisma"; 
 import Compreviews from "@/components/Compreviews";
+import UserEndComJob from "@/components/cards/UserEndComJob";
 
 type ReviewWithUser = review & {
   user: user;
@@ -82,9 +81,9 @@ export default function Page() {
                 <Heading size="6" mb="3">Open Positions</Heading>
                 <Separator size="4" mb="4" />
                 <Flex direction="column" gap="4">
-                  {companyJobs?.length > 0 ? (
+                  {companyJobs&&companyJobs?.length > 0 ? (
                     companyJobs?.map((job) => (
-                      <CompanyJobCard key={job.id} job={job} />
+                      <UserEndComJob key={job.id} job={job} />
                     ))
                   ) : (
                     <Text size="2" color="gray">No job openings found.</Text>
@@ -98,13 +97,6 @@ export default function Page() {
               </Tabs.Content>
             </Box>
           </Tabs.Root>
-        </Box>
-
-        <Box>
-          <BookmarkIcon
-            className="text-muted-foreground cursor-pointer"
-            size={24}
-          />
         </Box>
       </Flex>
     </Box>

@@ -56,13 +56,11 @@ async function handleSwitch(id: string) {
       maxWidth: "450px",
       display: "flex",
       flexDirection: "column",
-      padding: "16px",
+      padding: "10px",
     }}
   >
-    {/* Fixed Heading Area */}
  <Box>
       <Flex justify="start">
-        {/* Left Section: Title + Description */}
         <Box className="w-[70%]">
           <Dialog.Title>Switch Account</Dialog.Title>
           <Dialog.Description size="2" mb="3">
@@ -70,16 +68,13 @@ async function handleSwitch(id: string) {
           </Dialog.Description>
         </Box>
 
-        {/* Right Section: Guest + Add Account */}
-        <Box className="w-[30%]">
+        <Box className="w-[25%]">
           <Flex justify="center" gap="4">
-            {/* Guest Avatar */}
             <Box onClick={handleguest} className="p-2  rounded-full relative  flex flex-col items-center">
               <UserRound className="size-7 text-white hover:text-blue-500" />
               <p className="text-blue-500 text-sm mt-1">Guest</p>
             </Box>
 
-            {/* Add Account Avatar */}
             <Box
             onClick={()=>{
               setIsSwitchAcc(false);
@@ -94,7 +89,6 @@ async function handleSwitch(id: string) {
       </Flex>
     </Box>
 
-    {/* Scrollable List */}
     <Box
       style={{
         overflowY: "auto",

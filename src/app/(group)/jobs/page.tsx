@@ -21,8 +21,8 @@ export default async function page() {
   const jobs=res;
 // console.log(jobs);
   return (
-    <main>
-      <div className="flex flex-wrap justify-center gap-6 mt-6">
+    <main className="max-w-7xl m-auto px-3 py-5">
+    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
         {jobs.map((job) => (
           <JobCard fromSearch={true} key={job.id} job={job} />
         ))}

@@ -13,7 +13,7 @@ export default function ThemeContext({
     const [isDark,setIsDark]=useState(true);
   return (
         <Context.Provider value={{}}>
-        <Theme appearance={isDark?"dark":"light"}>
+        <Theme appearance={isDark?"dark":"light"} >
         {children}
         </Theme>
         </Context.Provider>

@@ -25,7 +25,6 @@ export async function GET(res: NextRequest, { params }:{
         job_id:id,
       },
     });
-    console.log(check);
     if(check){
         return NextResponse.json({
             success:false,
@@ -36,6 +35,7 @@ export async function GET(res: NextRequest, { params }:{
     const application = await prismaclient.applications.create({
       data: appToSave,
     });
+    console.log("add",application)
     return NextResponse.json({
         success:true,
         data:application,
