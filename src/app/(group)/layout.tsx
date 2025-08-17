@@ -78,10 +78,7 @@ useEffect(() => {
     >
       <HeaderWrapper />
       {
-        user&&company?
-        children:
-        <Loading/>
-      }
+        children      }
     </UserContext.Provider>
   );
 }
