@@ -2,7 +2,7 @@
 import { Theme } from "@radix-ui/themes";
 import { createContext, useState } from "react";
 
-export const Context=createContext();
+export const Context=createContext({});
 export default function ThemeContext({
   children,
 }: Readonly<{
