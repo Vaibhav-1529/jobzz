@@ -1,30 +1,29 @@
-// @ts-nocheck
 'use client';
+// @ts-nocheck
 import JobCard from "@/components/cards/job-card";
 import CardLoading from "@/components/lodingstate/CardLoading";
 import { useSearchParams } from "next/navigation";
 import { useContext, useEffect, useState,Suspense } from "react";
 import { UserContext } from "../layout";
 import Loading from "@/components/lodingstate/Loading";
+import { job } from "../../../../generated/prisma";
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading/>}>
       <SearchPageContent />
     </Suspense>
   );
 }
 
 function SearchPageContent() {
-  const searchparams = useSearchParams();
-  const { user } = useContext(UserContext);
+  const searchparams =useSearchParams();
   const q = searchparams.get("q") || "";
   const et = searchparams.get("et") || "";
   const jt = searchparams.get("jt") || "";
   const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const [isLoading, setIsLoading] = useState(true);
   const [jobs, setJobs] = useState([]);
-  if (!user) return <Loading />;
   useEffect(() => {
     async function fetchJobs() {
       try {
@@ -49,7 +48,7 @@ function SearchPageContent() {
         <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
           {isLoading
             ? arr.map((item) => <CardLoading key={item} fromSearch />)
-            : jobs.map((job) => (
+            : jobs.map((job:job) => (
                 <JobCard fromSearch={true} key={job.id} job={job} />
               ))}
         </div>
@@ -57,3 +56,4 @@ function SearchPageContent() {
     </main>
   );
 }
+export const dynamic = "force-dynamic";
