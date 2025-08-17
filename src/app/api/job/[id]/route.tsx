@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prismaclient from "@/services/prisma";
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, { params }: { params: any }) {
   const {id} = await params;
   try {
     const job = await prismaclient.job.findUnique({

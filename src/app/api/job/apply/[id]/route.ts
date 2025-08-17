@@ -3,9 +3,7 @@ import prismaclient from "@/services/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(res: NextRequest, { params }:{
-    params:{
-        id:string
-    }
+    params:any
 }) {
   const user = await Checkcookie();
   const {id} =await params;

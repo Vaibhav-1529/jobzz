@@ -2,7 +2,7 @@ import { Checkcookie } from "@/HelperFun/Checkcookie";
 import prismaclient from "@/services/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(res: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(res: NextRequest, { params }: { params: any }) {
   const user = await Checkcookie();
   const { id } = params;
 

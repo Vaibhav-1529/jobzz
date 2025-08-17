@@ -3,7 +3,7 @@ import prismaclient from "@/services/prisma";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params:any }
 ) {
   try {
     const { id } =await params;
