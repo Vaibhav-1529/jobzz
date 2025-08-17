@@ -21,6 +21,7 @@ export async function GET(res: NextRequest, { params }:{
       where: {
         user_id:user?.id,
         job_id:id,
+         resumeId: "someResumeId",
       },
     });
     if(check){
