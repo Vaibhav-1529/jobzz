@@ -45,7 +45,7 @@ export default function SimpleAddJobForm() {
     };
 
     try {
-      const res = await fetch("http://localhost:3000/api/job", {
+      const res = await fetch("/api/job", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

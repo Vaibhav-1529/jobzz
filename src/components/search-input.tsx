@@ -19,7 +19,7 @@ export default function SearchInput() {
   useEffect(() => {
     async function getsuggestion() {
       const res = await fetch(
-        `http://localhost:3000/api/search/suggestion?q=${input}`
+        `/api/search/suggestion?q=${input}`
       );
       const data = await res.json();
       if (data.success) {
