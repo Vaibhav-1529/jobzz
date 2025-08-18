@@ -39,7 +39,7 @@ export default function UserProviderLayout({
   const [user, setUser] = useState(null);
   const [isguest, setIsguest] = useState(false);
   const [company, setCompany] = useState(null);
-  const [isuserLoading, setIsuserLoading] = useState(false);
+  const [isuserLoading, setIsuserLoading] = useState(true);
 const router=useRouter();
   useEffect(() => {
     async function getUser() {
@@ -55,6 +55,9 @@ const router=useRouter();
       } catch (error) {
         console.error("Failed to fetch user:", error);
         setUser(null);
+      }
+      finally{
+        setIsuserLoading(false);
       }
     }
     getUser();

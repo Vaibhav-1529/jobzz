@@ -39,7 +39,7 @@ export default function page() {
   const [loading, setLoading] = useState<boolean>(false);
   const [isAppModal, setIsAppModal] = useState<boolean>(false);
   const [applicants, setApplicants] = useState<user[]>([]);
-  const [isApplied, setIsApplied] = useState<boolean>(true);
+  const [isApplied, setIsApplied] = useState<boolean>(false);
   const { id } = useParams();
   const { user } = useContext(UserContext);
   useEffect(() => {
@@ -59,26 +59,32 @@ export default function page() {
     }
     fetchJob();
   }, [id]);
-  useEffect(() => {
-    async function fetchaplicants() {
-      try {
-        const res = await fetch(`/api/applicants/${job?.id}`);
-        const data = await res.json();
-        setApplicants(data.data);
-        if (
-          Array.isArray(data.data) &&
-          data.data.find((item: user) => item.id == user?.id)
-        ) {
-          setIsApplied(true);
-        }
-      } catch (err) {
-        console.error("Failed to load job:", err);
-      } finally {
-        setIsAppModal(false);
+useEffect(() => {
+  async function fetchaplicants() {
+    if (!job || !user) return;
+    try {
+      const res = await fetch(`/api/applicants/${job.id}`);
+      const data = await res.json();
+      setApplicants(data.data);
+
+      if (
+        Array.isArray(data.data) &&
+        data.data.find((item: user) => item.id === user.id)
+      ) {
+        setIsApplied(true);
+      } else {
+        setIsApplied(false);
       }
+    } catch (err) {
+      console.error("Failed to load applicants:", err);
+    } finally {
+      setIsAppModal(false);
     }
-    if (job) fetchaplicants();
-  }, [job, isApplied]);
+  }
+
+  fetchaplicants();
+}, [job, user]); // <-- include user here
+
   if (loading) {
     return <Loading/>;
   }
