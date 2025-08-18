@@ -102,7 +102,7 @@ export default function UserServices() {
               <div>
                 <Link href={"/profile"}>
                   <Flex
-                    className="hover:border-1 px-3 py-1.5 hover:border-gray-500 rounded-md"
+                    className="hover:border-1 box-border px-3 py-1.5 hover:border-gray-500 rounded-md"
                     justify="between"
                     align="center"
                   >
@@ -118,7 +118,7 @@ export default function UserServices() {
 
                 <Link href={"/company/profile"}>
                   <Flex
-                    className="hover:border-1 px-3 py-1.5 hover:border-gray-500 rounded-md"
+                    className="hover:border-1 box-content px-3 py-1.5 hover:border-gray-500 rounded-md"
                     justify="between"
                     align="center"
                   >

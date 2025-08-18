@@ -39,9 +39,15 @@ export default function SearchPageContent() {
       <div className="h-full overflow-y-auto py-5 px-4 scrollbar-hidden pb-20">
         <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
           {isLoading
-            ? arr.map((item) => <CardLoading key={item} fromSearch />)
+            ? arr.map((item) => (
+                <div key={item} className="h-full">
+                  <CardLoading fromSearch />
+                </div>
+              ))
             : jobs.map((job) => (
-                <JobCard fromSearch={true} key={job.id} job={job} />
+                <div key={job.id} className="h-full">
+                  <JobCard fromSearch={true} job={job} />
+                </div>
               ))}
         </div>
       </div>

@@ -1,7 +1,6 @@
 "use client";
 import { UserContext } from '@/app/(group)/layout';
 import { Box, Flex, Heading, Separator, Text } from '@radix-ui/themes';
-import { BookmarkIcon } from 'lucide-react';
 import { useContext, useEffect, useState } from 'react';
 import CompanyJobCard from './cards/CompanyJobCard';
 import Loading from './lodingstate/Loading';
@@ -50,7 +49,6 @@ if (isLoading) return <SectionLoader/>;
                         ))}
                     </Flex>
                 </Box>
-                <BookmarkIcon className="text-muted-foreground cursor-pointer" />
             </Flex>
         </div>
     );

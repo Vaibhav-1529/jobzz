@@ -4,51 +4,51 @@ import {
   Card,
   Flex,
   Box,
-  Text,
-  Avatar,
-  Badge,
 } from "@radix-ui/themes";
 
 export default function CardLoading({ fromSearch = false }: { fromSearch?: boolean }) {
   return (
     <Card
       style={{
-        maxWidth: fromSearch ? "100%" : "35%",
         minWidth: "100%",
-        maxHeight:"260px",
+        height: "100%",
         display: "flex",
         flexDirection: "column",
-        gap: "1rem",
         padding: "1rem",
       }}
     >
-      <Flex align="start" justify="between">
-        <Box style={{ flexGrow: 1 }}>
-          <Skeleton height="24px" width="70%" />
-        </Box>
-        <Skeleton height="24px" width="60px" style={{borderRadius:"full"}} />
+      <Flex align="start" justify="between" style={{ marginBottom: 10 }}>
+        <Skeleton height="24px" width="70%" />
+        <Skeleton height="24px" width="60px" style={{ borderRadius: "12px" }} />
       </Flex>
 
-      <Box className="space-y-2">
+      <Box className="flex-1 space-y-2">
         <Skeleton height="12px" width="100%" />
         <Skeleton height="12px" width="95%" />
         <Skeleton height="12px" width="98%" />
         <Skeleton height="12px" width="80%" />
       </Box>
-      <Skeleton height="20px" width="80px" style={{borderRadius:"full"}} />
 
-      <Flex align="center" justify="between">
+      <Skeleton
+        height="20px"
+        width="80px"
+        style={{ borderRadius: "12px", margin: "5px 0" }}
+      />
+
+      <Flex align="center" justify="between" style={{ marginTop: "auto" }}>
         <Flex align="center" gap="3">
-          <Skeleton >
-            <Avatar size="2" fallback="." />
-          </Skeleton>
+          <Skeleton width="40px" height="40px" style={{ borderRadius: "50%" }} />
           <Box>
-            <Skeleton height="14px" width="100px" />
+            <Skeleton height="14px" width="160px" />
             <Skeleton height="12px" width="70px" />
           </Box>
         </Flex>
 
-        <Skeleton height="32px" width="100px" style={{borderRadius:"20%"}} />
+        <Skeleton
+          height="32px"
+          width="100px"
+          style={{ borderRadius: "8px" }}
+        />
       </Flex>
     </Card>
   );

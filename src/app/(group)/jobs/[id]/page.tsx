@@ -39,7 +39,7 @@ export default function page() {
   const [loading, setLoading] = useState<boolean>(false);
   const [isAppModal, setIsAppModal] = useState<boolean>(false);
   const [applicants, setApplicants] = useState<user[]>([]);
-  const [isApplied, setIsApplied] = useState<boolean>(false);
+  const [isApplied, setIsApplied] = useState<boolean>(true);
   const { id } = useParams();
   const { user } = useContext(UserContext);
   useEffect(() => {

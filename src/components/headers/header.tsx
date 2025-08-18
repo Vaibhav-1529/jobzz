@@ -18,7 +18,7 @@ const links = [
 ];
 
 export default function Header() {
-  const { user, company } = useContext(UserContext);
+  const { user, company,isuserLoading } = useContext(UserContext);
   const headerCtx = useContext(HeaderContext);
   if (!headerCtx) return null;
 

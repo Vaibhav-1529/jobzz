@@ -34,7 +34,7 @@ export default function ProfilePage() {
     return <Loading/>
   return (
     <main className="max-w-6xl mx-auto mt-10 px-4 text-foreground">
-      <Flex gap="8" className="flex-col md:flex-row">
+      <Flex gap="8" minHeight={"90vh"}className="flex-col md:flex-row">
         <Box className="flex-1 space-y-6">
           <Card className="p-4">
             <Flex className="gap-3 justify-center items-center">

@@ -108,11 +108,6 @@ export default function Home() {
           className="cursor-pointer transition-shadow hover:shadow-md w-full"
         >
           <Flex gap="4">
-            <img
-              src={job.logo}
-              alt={job.company}
-              className="w-12 h-12 rounded object-cover"
-            />
             <Flex direction="column">
               <Heading size="4">{job.title}</Heading>
               <Text>{job.company}</Text>
@@ -146,18 +141,6 @@ export default function Home() {
         <Text className="font-semibold">— Priya Mehra, Product Designer</Text>
       </section>
 
-      <footer className="mt-24 border-t pt-10 text-center text-sm text-gray-500">
-        <Flex justify="center" gap="6" className="mb-4">
-          <Link href="#">About</Link>
-          <Link href="#">Contact</Link>
-          <Link href="#">Privacy Policy</Link>
-          <Link href="#">Feedback</Link>
-        </Flex>
-        <Flex justify="center" align="center" gap="2">
-          <Mail size={16} /> contact@jobnest.com
-        </Flex>
-        <Text className="mt-4">© {new Date().getFullYear()} JobNest. All rights reserved.</Text>
-      </footer>
     </main>
   );
 }

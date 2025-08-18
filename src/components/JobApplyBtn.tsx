@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button, ThickChevronRightIcon } from "@radix-ui/themes";
 import { useState } from "react";
 import BtnLoading from "./lodingstate/BtnLoading";
@@ -11,35 +11,44 @@ export default function JobApplyBtn({
   isApplied: boolean;
   setIsApplied: (value: boolean) => void;
 }) {
-  const[isloading,setIsloading]=useState<boolean>(false)
+  const [isloading, setIsloading] = useState(false);
+
   async function handleSubmit() {
-    setIsloading(true)
+    setIsloading(true);
     try {
       const res = await fetch("/api/job/apply/" + job?.id);
       const data = await res.json();
+
       if (data.success) {
         alert("Applied Successfully.");
         setIsApplied(true);
+      } else if (data.message === "The user already applied for this job") {
+        setIsApplied(true);
       } else {
-        if ((data.message = "The user already applied for this job"))
-          setIsApplied(true);
+        alert(data.message || "Failed to apply");
       }
     } catch (error) {
-    }
-    finally{
-      setIsloading(false)
+      console.error(error);
+    } finally {
+      setIsloading(false);
     }
   }
+
   return (
     <Button
       className="flex justify-center items-center border-2"
       color="green"
-      size={"3"}
+      size="3"
       onClick={handleSubmit}
-    >{
-      isloading?<BtnLoading/>:<div className="flex gap-3 items-center ">Apply<ThickChevronRightIcon /></div>
-    }
-      
+    >
+      {isloading ? (
+        <BtnLoading />
+      ) : (
+        <div className="flex gap-3 items-center">
+          Apply
+          <ThickChevronRightIcon />
+        </div>
+      )}
     </Button>
   );
 }

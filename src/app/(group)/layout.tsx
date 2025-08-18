@@ -16,6 +16,8 @@ type UserContextType = {
   setCompany: (value: Company) => void;
   isguest: boolean;
   setIsguest: (value: boolean) => void;
+  isuserLoading: boolean,
+  setIsuserLoading: (value: boolean) => void,
 };
 
 export const UserContext = createContext<UserContextType>({
@@ -25,6 +27,8 @@ export const UserContext = createContext<UserContextType>({
   setCompany: (value: company|null) => {},
   isguest: false,
   setIsguest: (value: boolean) => {},
+  isuserLoading: false,
+  setIsuserLoading: (value: boolean) => {},
 });
 
 export default function UserProviderLayout({
@@ -35,6 +39,7 @@ export default function UserProviderLayout({
   const [user, setUser] = useState(null);
   const [isguest, setIsguest] = useState(false);
   const [company, setCompany] = useState(null);
+  const [isuserLoading, setIsuserLoading] = useState(false);
 const router=useRouter();
   useEffect(() => {
     async function getUser() {
@@ -74,7 +79,7 @@ useEffect(() => {
 }, []);
   return (
     <UserContext.Provider
-      value={{ user, setUser, company, setCompany, isguest, setIsguest }}
+      value={{ user, setUser, company, setCompany, isguest, setIsguest,isuserLoading, setIsuserLoading }}
     >
       <HeaderWrapper />
       {

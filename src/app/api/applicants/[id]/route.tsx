@@ -1,8 +1,13 @@
 import prismaClient from "@/services/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, { params }: { params: any }) {
-  const { id } = params; // no need for `await` here
+export async function GET(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  const { id } = await context.params;   
+
+  console.log("Fetching applicants for job ID:", id);
 
   try {
     const res = await prismaClient.applications.findMany({
@@ -19,7 +24,7 @@ export async function GET(req: NextRequest, { params }: { params: any }) {
       },
     });
 
-    const usersOnly = res.map(app => app.user);
+    const usersOnly = res.map((app) => app.user);
 
     return NextResponse.json({
       success: true,

@@ -10,7 +10,7 @@ export default function Loading() {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="flex justify-center items-center w-full h-[200px]"
+      className="flex justify-center items-center w-full min-h-[90vh]"
     >
       <motion.div
         animate={{ rotate: 360 }}
