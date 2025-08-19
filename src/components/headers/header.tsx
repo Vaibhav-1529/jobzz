@@ -24,11 +24,6 @@ export default function Header() {
 
   const { open, setOpen, signUpOpen, setSignUpOpen } = headerCtx;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  if(!isuserLoading&&!user){
-    setTimeout(() => {
-      setOpen(true);
-    }, 5000)
-    ;}
   return (
     <header className="sticky top-0 z-50 bg-gray-900 border-b border-gray-800 w-full">
       <Box p="3" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
